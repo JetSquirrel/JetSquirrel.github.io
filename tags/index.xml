@@ -5,6 +5,6 @@
     <link>https://example.com/tags/</link>
     <description>Recent content in Tags on Jett Deng</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language><atom:link href="https://example.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    <language>zh-cn</language><atom:link href="https://example.com/tags/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>
