@@ -2,7 +2,6 @@
 <html lang="zh-cn">
     
 <head>
-	<meta name="generator" content="Hugo 0.97.3" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -24,6 +23,41 @@
     <meta property="og:description" content="Hugo is Absurdly Fast!" />
 
     
+
+<meta property="og:type" content="article" />
+<meta property="article:publisher" content="Jett Deng" />
+<meta property="og:article:published_time" content=0001-01-01T00:00:00Z />
+<meta property="article:published_time" content=0001-01-01T00:00:00Z />
+
+
+
+
+
+<script defer type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "headline": "",
+    "author": {
+      "@type": "Person",
+      "name": "Jett Deng"
+    },
+    "datePublished": "0001-01-01",
+    "description": "",
+    "wordCount":  177 ,
+    "mainEntityOfPage": "True",
+    "dateModified": "0001-01-01",
+    "publisher": {
+      "@type": "Organization",
+      "name": "Jett Deng",
+      "logo": {
+        "@type": "imageObject",
+        "url": "https:\/\/jett-deng.github.io\/favicon.ico"
+      }
+    }
+  }
+</script>
+
 
 
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
@@ -86,120 +120,92 @@
 
         <main>
             
-
 <div class="container">
-    <section class="my">
-        <div class="content">
-            
-            <p>程序员。</p>
-
-            
-            <div class="bio-social">
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
+    <article>
+        <header class="article-header">
+            <div class="thumb">
+                <div>
+                    <h1></h1>
+                    <div class="post-meta">
+                        <div>
+                            
+                            
+                              
+                            
+                            By Jett Deng | <time>January 01, 0001</time>
+                            | 1 minutes
+                        </div>
+                        <div class="tags">
+                            
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-    </section>
+        </header>
+    </article>
+
+    <div class="article-post">
+    <p>在 <a href="siyuan://blocks/20220509112540-87jma4y">&ldquo;Informer&rdquo;</a>开始运行时，<code>Reflector</code> 对象的 <code>store</code> 字段被设置为了 <a href="https://github.com/kubernetes/client-go/blob/v0.18.6/tools/cache/shared_informer.go#L336-L378">DeltaFIFO 队列对象</a></p>
+<p>DeltaFIFO的结构定义的<a href="https://github.com/kubernetes/client-go/blob/v0.18.6/tools/cache/delta_fifo.go#L158-L192">源代码</a>如下：</p>
+<pre tabindex="0"><code>type DeltaFIFO struct {
+    // lock/cond protects access to &#39;items&#39; and &#39;queue&#39;.
+    lock sync.RWMutex
+    cond sync.Cond
+
+    // We depend on the property that items in the set are in
+    // the queue and vice versa, and that all Deltas in this
+    // map have at least one Delta.
+    items map[string]Deltas
+    queue []string
+
+    // a lot of code here
+}
+</code></pre><p>DeltaFIFO可以本</p>
+<p>可以看到 <a href="siyuan://blocks/20220509122523-zsk961s">&ldquo;DeltaFIFO&rdquo;</a>可以拆分开分为两个部分来理解 [<a href="siyuan://blocks/20220509115438-pbyetvk">&ldquo;1&rdquo;</a>]</p>
+<ul>
+<li>Delta：用于保存资源消费类型的资源对象存储</li>
+<li>FIFO：一个字符串队列</li>
+</ul>
+<p>其中Deltas的键值对，其<a href="http://127.0.0.1:6806/%5B*%5D(https://github.com/kubernetes/client-go/blob/v0.18.6/tools/cache/delta_fifo.go#L675-L683)">源代码</a>如下：</p>
+<pre tabindex="0"><code>// Deltas is a list of one or more &#39;Delta&#39;s to an individual object.
+// The oldest delta is at index 0, the newest delta is the last one.
+type Deltas []Delta
+
+// Delta is the type stored by a DeltaFIFO. It tells you what change
+// happened, and the object&#39;s state after* that change.
+//
+// [*] Unless the change is a deletion, and then you&#39;ll get the final
+//     state of the object before it was deleted.
+type Delta struct {
+    Type   DeltaType
+    Object interface{}
+}
+</code></pre><p><code>DeltaType</code> 就是 Delta 的类型，有 <a href="https://github.com/kubernetes/client-go/blob/v0.18.6/tools/cache/delta_fifo.go#L656-L673">Added、Updated、Deleted、Replaced、Sync </a>这么几种，其作用是表示Kuberenets资源对象发生了何种变化。</p>
+<p><a href="https://blog.crazytaxii.com/posts/k8s_client_go_informer2/">Kubernetes Informer - DeltaFIFO Queue 篇 · 风与云原生 </a><a href="https://blog.crazytaxii.com/posts/k8s_client_go_informer2/">(crazytaxii.com)</a></p>
+
+    </div>
 </div>
 
-
-
-
-
-
 <div class="container">
-    <section>
-        <h2>
-            Latest Articles
-            
-        </h2>
-        <div class="posts">
-            
-            <div class="post">
-                <a href="/post/pets-and-cattle/">
-                    <div class="post-row">
-                        <time>May 19</time>
-                        <h3>Pets and Cattle</h3>
-                    </div>
-                    
-                </a>
-            </div>
-            
-            <div class="post">
-                <a href="/post/why-promethus-pull/">
-                    <div class="post-row">
-                        <time>May 19</time>
-                        <h3>Why Promethus Pull</h3>
-                    </div>
-                    
-                </a>
-            </div>
-            
-            <div class="post">
-                <a href="/post/my-campus-offer-record/">
-                    <div class="post-row">
-                        <time>Apr 26</time>
-                        <h3>我的校招总结</h3>
-                    </div>
-                    
-                </a>
-            </div>
-            
-            <div class="post">
-                <a href="/post/k8s-source-code-informer-deltafifo/">
-                    <div class="post-row">
-                        <time>Jan 01</time>
-                        <h3></h3>
-                    </div>
-                    
-                </a>
-            </div>
-            
-        </div>
-    </section>
+    
+    <nav class="flex container suggested">
+        
+        
+        
+        <a rel="next" href="/post/my-campus-offer-record/" title="Next post (newer)">
+            <span>Next</span>
+            我的校招总结
+            </a> 
+        
+    </nav>
     
 </div>
+ 
+<div class="container">
+    
+</div>
+
+</main>
 
 
         </main>
