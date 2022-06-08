@@ -6,16 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="theme-color" content="dark">
-    <title>Why Promethus Pull | Jett Deng</title>
+    <title>为什么 Promethus 采用了 Pull 模式？ | Jett Deng</title>
 
     
     
     
     <meta property="og:site_name" content="Jett&#39;s Blog" />
-    <meta property="og:title" content="Why Promethus Pull | Jett Deng"/>
-    <meta itemprop="name" content="Why Promethus Pull | Jett Deng" />
-    <meta name="twitter:title" content="Why Promethus Pull | Jett Deng" />
-    <meta name="application-name" content="Why Promethus Pull | Jett Deng" /><meta name="twitter:card" content="summary"/>
+    <meta property="og:title" content="为什么 Promethus 采用了 Pull 模式？ | Jett Deng"/>
+    <meta itemprop="name" content="为什么 Promethus 采用了 Pull 模式？ | Jett Deng" />
+    <meta name="twitter:title" content="为什么 Promethus 采用了 Pull 模式？ | Jett Deng" />
+    <meta name="application-name" content="为什么 Promethus 采用了 Pull 模式？ | Jett Deng" /><meta name="twitter:card" content="summary"/>
 
     <meta name="description" content="Hugo is Absurdly Fast!" />
     <meta name="twitter:description" content="Hugo is Absurdly Fast!"/>
@@ -37,14 +37,14 @@
   {
     "@context": "http://schema.org",
     "@type": "Article",
-    "headline": "Why Promethus Pull",
+    "headline": "为什么 Promethus 采用了 Pull 模式？",
     "author": {
       "@type": "Person",
       "name": "Jett Deng"
     },
     "datePublished": "2022-05-19",
     "description": "",
-    "wordCount":  123 ,
+    "wordCount":  147 ,
     "mainEntityOfPage": "True",
     "dateModified": "2022-05-19",
     "publisher": {
@@ -52,7 +52,7 @@
       "name": "Jett Deng",
       "logo": {
         "@type": "imageObject",
-        "url": "https:\/\/jett-deng.github.io\/favicon.ico"
+        "url": "favicon.ico"
       }
     }
   }
@@ -105,7 +105,7 @@
             </div>
             <div class="flex">
                 
-                <a href="/about/">About</a>
+                <a href="/articles/">Articles</a>
                 
                 
                     <button id="dark-mode-button">
@@ -125,7 +125,7 @@
         <header class="article-header">
             <div class="thumb">
                 <div>
-                    <h1>Why Promethus Pull</h1>
+                    <h1>为什么 Promethus 采用了 Pull 模式？</h1>
                     <div class="post-meta">
                         <div>
                             
@@ -150,13 +150,13 @@
     src="http://blog-image-1306462451.cos.ap-nanjing.myqcloud.com/why-promethus-pull/pull-and-push.png" 
     alt="pull-and-push" 
      /></p>
-<p>作为目前云原生监控中扛把子的 Prometus 采集数据采用了 Pull 模式，虽然在它官方文档的 <a href="https://prometheus.io/docs/introduction/faq/#why-do-you-pull-rather-than-push">FAQ</a> 中给出了理由：</p>
+<p>作为目前云原生监控中扛把子的 Prometus 采集数据采用了 Pull 模式，虽然在官方文档 FAQ](<a href="https://prometheus.io/docs/introduction/faq/#why-do-you-pull-rather-than-push">https://prometheus.io/docs/introduction/faq/#why-do-you-pull-rather-than-push</a>) 中给出了理由：</p>
 <ul>
 <li>可以在笔记本上监控开发时产生的变更</li>
 <li>如果监控目标宕机了可以更容易被发现</li>
 <li>可以通过 web 浏览器手工访问监控目标并检查其健康状况</li>
 </ul>
-<p>但是这些不能说明 Pull 模式的优点，在前段时间在推特上看到了一个关于 Prometheus 采用 Pull 的<a href="https://twitter.com/_a_wing/status/1512451830814437385">讨论</a>，经过结合官方博客的内容我对其进行了总结</p>
+<p>但是这些不能说明 Pull 模式的优点，在前段时间在推特上看到了一个关于 Prometheus 采用 Pull 的<a href="https://twitter.com/_a_wing/status/1512451830814437385">                                                                                                                        Twitter           (推特)                             (推特)                             (推特)                             (推特)                             (推特)                             (推特)                  讨论</a>，经过结合官方博客的内容我对其进行了总结</p>
 <h2 id="prometheus-的设计理念">
     <a href="#prometheus-%e7%9a%84%e8%ae%be%e8%ae%a1%e7%90%86%e5%bf%b5" class="anchor">
         <svg class="icon" aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16">
@@ -167,9 +167,9 @@
     </a>
     Prometheus 的设计理念
 </h2>
-<p>Prometheus 的 slogan 是「From metrics to insight」，它仅仅关心标准化地采集给定指标的当前状态，而不是导致这些指标的底层事件，所以其不是基于事件的监控系统。</p>
+<p>Prometheus 的                                                                                                     slogan           (口号)                             (口号)                             (口号)                             (口号)                             (口号)                   是「From                                                                                                     metrics           (公制)                             (公制)                             (公制)                             (公制)                             (公制)                   to insight」，它仅仅关心标准化地采集给定指标的当前状态，而不是导致这些指标的底层事件，所以其不是基于事件的监控系统。</p>
 <p>例如，计量服务不会发送关于每个 HTTP 请求的消息给 Prometheus 服务器，而是在内存中简单地累加这些请求。每秒可能会发生成百上千次这种累加而不会产生任何监控流量。Prometheus 然后每隔 15 或 30 秒简单地问一下这个服务实例当前状态的累积值而已。监控结果的传输量很小，拉取模式也不会产生问题。</p>
-<p>如果是基于事件的监控系统，需要在每一个事件「HTTP 请求、异常」发生时立即向监控服务器报告，监控服务器可以汇聚事件为指标或保存事件用于后续处理「例如ELK」。</p>
+<p>如果是基于事件的监控系统，需要在每一个事件「HTTP 请求、异常」发生时立即向监控服务器报告，监控服务器可以汇聚事件为指标或保存事件用于后续处理「例如                                                                                                    ELK           (麋鹿)                             (麋鹿)                             (麋鹿)                             (麋鹿)                             (麋鹿)                  」。</p>
 <h2 id="监控目标的配置更少">
     <a href="#%e7%9b%91%e6%8e%a7%e7%9b%ae%e6%a0%87%e7%9a%84%e9%85%8d%e7%bd%ae%e6%9b%b4%e5%b0%91" class="anchor">
         <svg class="icon" aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16">
@@ -221,7 +221,7 @@
 <li>如果监控对于实时要求很高的服务，这种系统拉取确实会导致问题，计量服务必须在拉取的间隔中间缓存事件，拉取的频率也要非常高才能接近推送模式的效果。</li>
 <li>当应用服务或监控目标的网络不可达「如 IoT 环境」，Pull 模式几乎不可能。这个时候就需要采取 pushgateway 的方式</li>
 </ul>
-<p>如果必需要使用 Push 模式，Prometheus 官方提供了 <a href="https://prometheus.io/docs/instrumenting/pushing/">Pushgateway</a>的方式，但实际上 pushgateway 和 prometheus 之间依然是 pull 模式。</p>
+<p>如果必需要使用 Push 模式，Prometheus 提供了 <a href="https://prometheus.io/docs/instrumenting/pushing/">Pushgateway</a>的方式，但实际上 pushgateway 和 prometheus 之间依然是 pull 模式。</p>
 <h2 id="总结">
     <a href="#%e6%80%bb%e7%bb%93" class="anchor">
         <svg class="icon" aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16">
@@ -278,7 +278,7 @@
         
         <a rel="next" href="/post/pets-and-cattle/" title="Next post (newer)">
             <span>Next</span>
-            Pets and Cattle
+            宠物和牲畜带来的思考
             </a> 
         
     </nav>
@@ -303,7 +303,7 @@
 
         
     </section>
-    <script defer src="/ts/features.2f98c2f5215583b54b0a8bd7bdb10411467f4fee386a61e03ca3ddf376273fc4.js" 
+    <script defer src="/ts/features.dd8e5b18a6dda91367e396fd8dc9b9f83a1993065f709a53e056e0f2e9096ea1.js" 
     data-enable-footnotes="true"
     ></script>
 </footer>

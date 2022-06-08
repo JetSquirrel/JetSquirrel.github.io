@@ -6,16 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="theme-color" content="dark">
-    <title>Jett Deng</title>
+    <title>Informer Deltafifo 源码解读 | Jett Deng</title>
 
     
     
     
     <meta property="og:site_name" content="Jett&#39;s Blog" />
-    <meta property="og:title" content="Jett Deng"/>
-    <meta itemprop="name" content="Jett Deng" />
-    <meta name="twitter:title" content="Jett Deng" />
-    <meta name="application-name" content="Jett Deng" /><meta name="twitter:card" content="summary"/>
+    <meta property="og:title" content="Informer Deltafifo 源码解读 | Jett Deng"/>
+    <meta itemprop="name" content="Informer Deltafifo 源码解读 | Jett Deng" />
+    <meta name="twitter:title" content="Informer Deltafifo 源码解读 | Jett Deng" />
+    <meta name="application-name" content="Informer Deltafifo 源码解读 | Jett Deng" /><meta name="twitter:card" content="summary"/>
 
     <meta name="description" content="Hugo is Absurdly Fast!" />
     <meta name="twitter:description" content="Hugo is Absurdly Fast!"/>
@@ -26,8 +26,8 @@
 
 <meta property="og:type" content="article" />
 <meta property="article:publisher" content="Jett Deng" />
-<meta property="og:article:published_time" content=0001-01-01T00:00:00Z />
-<meta property="article:published_time" content=0001-01-01T00:00:00Z />
+<meta property="og:article:published_time" content=2022-05-19T22:16:06&#43;0800 />
+<meta property="article:published_time" content=2022-05-19T22:16:06&#43;0800 />
 
 
 
@@ -37,22 +37,22 @@
   {
     "@context": "http://schema.org",
     "@type": "Article",
-    "headline": "",
+    "headline": "Informer Deltafifo 源码解读",
     "author": {
       "@type": "Person",
       "name": "Jett Deng"
     },
-    "datePublished": "0001-01-01",
+    "datePublished": "2022-05-19",
     "description": "",
-    "wordCount":  177 ,
+    "wordCount":  204 ,
     "mainEntityOfPage": "True",
-    "dateModified": "0001-01-01",
+    "dateModified": "2022-05-19",
     "publisher": {
       "@type": "Organization",
       "name": "Jett Deng",
       "logo": {
         "@type": "imageObject",
-        "url": "https:\/\/jett-deng.github.io\/favicon.ico"
+        "url": "favicon.ico"
       }
     }
   }
@@ -105,7 +105,7 @@
             </div>
             <div class="flex">
                 
-                <a href="/about/">About</a>
+                <a href="/articles/">Articles</a>
                 
                 
                     <button id="dark-mode-button">
@@ -125,14 +125,14 @@
         <header class="article-header">
             <div class="thumb">
                 <div>
-                    <h1></h1>
+                    <h1>Informer Deltafifo 源码解读</h1>
                     <div class="post-meta">
                         <div>
                             
                             
                               
                             
-                            By Jett Deng | <time>January 01, 0001</time>
+                            By Jett Deng | <time>May 19, 2022</time>
                             | 1 minutes
                         </div>
                         <div class="tags">
@@ -145,43 +145,81 @@
     </article>
 
     <div class="article-post">
-    <p>在 <a href="siyuan://blocks/20220509112540-87jma4y">&ldquo;Informer&rdquo;</a>开始运行时，<code>Reflector</code> 对象的 <code>store</code> 字段被设置为了 <a href="https://github.com/kubernetes/client-go/blob/v0.18.6/tools/cache/shared_informer.go#L336-L378">DeltaFIFO 队列对象</a></p>
+    <p>在 Informer开始运行时，<code>Reflector</code> 对象的 <code>store</code> 字段被设置为了 <a href="https://github.com/kubernetes/client-go/blob/v0.18.6/tools/cache/shared_informer.go#L336-L378">DeltaFIFO 队列对象</a></p>
 <p>DeltaFIFO的结构定义的<a href="https://github.com/kubernetes/client-go/blob/v0.18.6/tools/cache/delta_fifo.go#L158-L192">源代码</a>如下：</p>
-<pre tabindex="0"><code>type DeltaFIFO struct {
-    // lock/cond protects access to &#39;items&#39; and &#39;queue&#39;.
-    lock sync.RWMutex
-    cond sync.Cond
-
-    // We depend on the property that items in the set are in
-    // the queue and vice versa, and that all Deltas in this
-    // map have at least one Delta.
-    items map[string]Deltas
-    queue []string
-
-    // a lot of code here
-}
-</code></pre><p>DeltaFIFO可以本</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">type</span> <span class="nx">DeltaFIFO</span> <span class="kd">struct</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// lock/cond protects access to &#39;items&#39; and &#39;queue&#39;.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">lock</span> <span class="nx">sync</span><span class="p">.</span><span class="nx">RWMutex</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">cond</span> <span class="nx">sync</span><span class="p">.</span><span class="nx">Cond</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// We depend on the property that items in the set are in
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// the queue and vice versa, and that all Deltas in this
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// map have at least one Delta.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">items</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="nx">Deltas</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">queue</span> <span class="p">[]</span><span class="kt">string</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// a lot of code here
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>DeltaFIFO可以本</p>
 <p>可以看到 <a href="siyuan://blocks/20220509122523-zsk961s">&ldquo;DeltaFIFO&rdquo;</a>可以拆分开分为两个部分来理解 [<a href="siyuan://blocks/20220509115438-pbyetvk">&ldquo;1&rdquo;</a>]</p>
 <ul>
 <li>Delta：用于保存资源消费类型的资源对象存储</li>
 <li>FIFO：一个字符串队列</li>
 </ul>
 <p>其中Deltas的键值对，其<a href="http://127.0.0.1:6806/%5B*%5D(https://github.com/kubernetes/client-go/blob/v0.18.6/tools/cache/delta_fifo.go#L675-L683)">源代码</a>如下：</p>
-<pre tabindex="0"><code>// Deltas is a list of one or more &#39;Delta&#39;s to an individual object.
-// The oldest delta is at index 0, the newest delta is the last one.
-type Deltas []Delta
-
-// Delta is the type stored by a DeltaFIFO. It tells you what change
-// happened, and the object&#39;s state after* that change.
-//
-// [*] Unless the change is a deletion, and then you&#39;ll get the final
-//     state of the object before it was deleted.
-type Delta struct {
-    Type   DeltaType
-    Object interface{}
-}
-</code></pre><p><code>DeltaType</code> 就是 Delta 的类型，有 <a href="https://github.com/kubernetes/client-go/blob/v0.18.6/tools/cache/delta_fifo.go#L656-L673">Added、Updated、Deleted、Replaced、Sync </a>这么几种，其作用是表示Kuberenets资源对象发生了何种变化。</p>
-<p><a href="https://blog.crazytaxii.com/posts/k8s_client_go_informer2/">Kubernetes Informer - DeltaFIFO Queue 篇 · 风与云原生 </a><a href="https://blog.crazytaxii.com/posts/k8s_client_go_informer2/">(crazytaxii.com)</a></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="c1">// Deltas is a list of one or more &#39;Delta&#39;s to an individual object.
+</span></span></span><span class="line"><span class="cl"><span class="c1">// The oldest delta is at index 0, the newest delta is the last one.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">type</span> <span class="nx">Deltas</span> <span class="p">[]</span><span class="nx">Delta</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// Delta is the type stored by a DeltaFIFO. It tells you what change
+</span></span></span><span class="line"><span class="cl"><span class="c1">// happened, and the object&#39;s state after* that change.
+</span></span></span><span class="line"><span class="cl"><span class="c1">//
+</span></span></span><span class="line"><span class="cl"><span class="c1">// [*] Unless the change is a deletion, and then you&#39;ll get the final
+</span></span></span><span class="line"><span class="cl"><span class="c1">//     state of the object before it was deleted.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">type</span> <span class="nx">Delta</span> <span class="kd">struct</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">Type</span>   <span class="nx">DeltaType</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">Object</span> <span class="kd">interface</span><span class="p">{}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>DeltaType</code> 就是 Delta 的类型，有 <a href="https://github.com/kubernetes/client-go/blob/v0.18.6/tools/cache/delta_fifo.go#L656-L673">Added、Updated、Deleted、Replaced、Sync </a>这么几种，其作用是表示Kuberenets资源对象发生了何种变化。</p>
+<p><a href="https://blog.crazytaxii.com/posts/k8s_client_go_informer2/">Kubernetes                     Informer           (举报人)                   - DeltaFIFO Queue 篇 · 风与云原生 (crazytaxii.com)</a></p>
 
     </div>
 </div>
@@ -190,11 +228,16 @@ type Delta struct {
     
     <nav class="flex container suggested">
         
+        <a rel="prev" href="/post/pets-and-cattle/" title="Previous post (older)">
+            <span>Previous</span>
+            宠物和牲畜带来的思考
+            </a>
         
         
-        <a rel="next" href="/post/my-campus-offer-record/" title="Next post (newer)">
+        
+        <a rel="next" href="/post/test/" title="Next post (newer)">
             <span>Next</span>
-            我的校招总结
+            Test
             </a> 
         
     </nav>
@@ -219,7 +262,7 @@ type Delta struct {
 
         
     </section>
-    <script defer src="/ts/features.2f98c2f5215583b54b0a8bd7bdb10411467f4fee386a61e03ca3ddf376273fc4.js" 
+    <script defer src="/ts/features.dd8e5b18a6dda91367e396fd8dc9b9f83a1993065f709a53e056e0f2e9096ea1.js" 
     data-enable-footnotes="true"
     ></script>
 </footer>

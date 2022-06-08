@@ -2,11 +2,35 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://jett-deng.github.io/</loc>
+    <loc>/</loc>
+    <lastmod>2022-06-08T22:21:33+08:00</lastmod>
     <priority>0</priority>
   </url><url>
-    <loc>https://jett-deng.github.io/categories/</loc>
+    <loc>/post/</loc>
+    <lastmod>2022-06-08T22:21:33+08:00</lastmod>
   </url><url>
-    <loc>https://jett-deng.github.io/tags/</loc>
+    <loc>/post/test/</loc>
+    <lastmod>2022-06-08T22:21:33+08:00</lastmod>
+  </url><url>
+    <loc>/post/k8s-source-code-informer-deltafifo/</loc>
+    <lastmod>2022-05-19T22:16:06+08:00</lastmod>
+  </url><url>
+    <loc>/post/pets-and-cattle/</loc>
+    <lastmod>2022-05-19T12:03:55+08:00</lastmod>
+  </url><url>
+    <loc>/post/why-promethus-using-pull/</loc>
+    <lastmod>2022-05-19T12:02:44+08:00</lastmod>
+  </url><url>
+    <loc>/post/my-campus-offer-record/</loc>
+    <lastmod>2022-04-26T15:30:27+08:00</lastmod>
+  </url><url>
+    <loc>/about/</loc>
+    <lastmod>2022-04-26T15:29:47+08:00</lastmod>
+  </url><url>
+    <loc>/articles/</loc>
+  </url><url>
+    <loc>/categories/</loc>
+  </url><url>
+    <loc>/tags/</loc>
   </url>
 </urlset>
