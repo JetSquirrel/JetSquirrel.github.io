@@ -1,21 +1,20 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-    <channel>
-        <title>喷气松鼠 JetSquirrel</title>
-        <link>/</link>
-        <description>Recent content on 喷气松鼠 JetSquirrel</description>
-        <generator>Hugo -- gohugo.io</generator>
-        <language>zh-cn</language>
-        <lastBuildDate>Thu, 19 May 2022 22:16:06 +0800</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" /><item>
-        <title>Informer Deltafifo 源码解读</title>
-        <link>/post/k8s-source-code-informer-deltafifo/</link>
-        <pubDate>Thu, 19 May 2022 22:16:06 +0800</pubDate>
-        
-        <guid>/post/k8s-source-code-informer-deltafifo/</guid>
-        <description>&lt;p&gt;在 Informer开始运行时，&lt;code&gt;Reflector&lt;/code&gt; 对象的 &lt;code&gt;store&lt;/code&gt; 字段被设置为了 &lt;a class=&#34;link&#34; href=&#34;https://github.com/kubernetes/client-go/blob/v0.18.6/tools/cache/shared_informer.go#L336-L378&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;DeltaFIFO 队列对象&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;DeltaFIFO的结构定义的&lt;a class=&#34;link&#34; href=&#34;https://github.com/kubernetes/client-go/blob/v0.18.6/tools/cache/delta_fifo.go#L158-L192&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;源代码&lt;/a&gt;如下：&lt;/p&gt;
+  <channel>
+    <title>喷气松鼠</title>
+    <link>/</link>
+    <description>Recent content on 喷气松鼠</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 19 May 2022 22:16:06 +0800</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+    <title>Informer Deltafifo 源码解读</title>
+    <link>/post/k8s-source-code-informer-deltafifo/</link>
+    <pubDate>Thu, 19 May 2022 22:16:06 +0800</pubDate>
+    
+    <guid>/post/k8s-source-code-informer-deltafifo/</guid>
+    <description>
+        &lt;p&gt;在 Informer开始运行时，&lt;code&gt;Reflector&lt;/code&gt; 对象的 &lt;code&gt;store&lt;/code&gt; 字段被设置为了 &lt;a href=&#34;https://github.com/kubernetes/client-go/blob/v0.18.6/tools/cache/shared_informer.go#L336-L378&#34;&gt;DeltaFIFO 队列对象&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;DeltaFIFO的结构定义的&lt;a href=&#34;https://github.com/kubernetes/client-go/blob/v0.18.6/tools/cache/delta_fifo.go#L158-L192&#34;&gt;源代码&lt;/a&gt;如下：&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
@@ -49,13 +48,12 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;DeltaFIFO可以本&lt;/p&gt;
-&lt;p&gt;可以看到 &lt;a class=&#34;link&#34; href=&#34;siyuan://blocks/20220509122523-zsk961s&#34; &gt;&amp;ldquo;DeltaFIFO&amp;rdquo;&lt;/a&gt;可以拆分开分为两个部分来理解 [&lt;a class=&#34;link&#34; href=&#34;siyuan://blocks/20220509115438-pbyetvk&#34; &gt;&amp;ldquo;1&amp;rdquo;&lt;/a&gt;]&lt;/p&gt;
+&lt;p&gt;可以看到 &lt;a href=&#34;siyuan://blocks/20220509122523-zsk961s&#34;&gt;&amp;ldquo;DeltaFIFO&amp;rdquo;&lt;/a&gt;可以拆分开分为两个部分来理解 [&lt;a href=&#34;siyuan://blocks/20220509115438-pbyetvk&#34;&gt;&amp;ldquo;1&amp;rdquo;&lt;/a&gt;]&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Delta：用于保存资源消费类型的资源对象存储&lt;/li&gt;
 &lt;li&gt;FIFO：一个字符串队列&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;其中Deltas的键值对，其&lt;a class=&#34;link&#34; href=&#34;http://127.0.0.1:6806/%5B%5c*%5D%28https://github.com/kubernetes/client-go/blob/v0.18.6/tools/cache/delta_fifo.go#L675-L683%29&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;源代码&lt;/a&gt;如下：&lt;/p&gt;
+&lt;p&gt;其中Deltas的键值对，其&lt;a href=&#34;http://127.0.0.1:6806/%5B*%5D(https://github.com/kubernetes/client-go/blob/v0.18.6/tools/cache/delta_fifo.go#L675-L683)&#34;&gt;源代码&lt;/a&gt;如下：&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
@@ -88,114 +86,137 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;&lt;code&gt;DeltaType&lt;/code&gt; 就是 Delta 的类型，有 &lt;a class=&#34;link&#34; href=&#34;https://github.com/kubernetes/client-go/blob/v0.18.6/tools/cache/delta_fifo.go#L656-L673&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;Added、Updated、Deleted、Replaced、Sync &lt;/a&gt;这么几种，其作用是表示Kuberenets资源对象发生了何种变化。&lt;/p&gt;
-&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://blog.crazytaxii.com/posts/k8s_client_go_informer2/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;Kubernetes                     Informer           (举报人)                   - DeltaFIFO Queue 篇 · 风与云原生 (crazytaxii.com)&lt;/a&gt;&lt;/p&gt;
-</description>
-        </item>
-        <item>
-        <title>宠物和牲畜带来的思考</title>
-        <link>/post/pets-and-cattle/</link>
-        <pubDate>Thu, 19 May 2022 12:03:55 +0800</pubDate>
-        
-        <guid>/post/pets-and-cattle/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>为什么 Promethus 采用了 Pull 模式？</title>
-        <link>/post/why-promethus-using-pull/</link>
-        <pubDate>Thu, 19 May 2022 12:02:44 +0800</pubDate>
-        
-        <guid>/post/why-promethus-using-pull/</guid>
-        <description>&lt;p&gt;在数据监控领域，数据采集端获取到监控目标的数据通常有 &lt;strong&gt;Push&lt;/strong&gt; 和 &lt;strong&gt;Pull&lt;/strong&gt; 两种方案，其中 Push 是由数据产生端根据事件驱动主动向采集端发送数据，而 Pull 是由采集端定时拉取数据。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/http:/blog-image-1306462451.cos.ap-nanjing.myqcloud.com/why-promethus-pull/pull-and-push.png&#34;
-	
-	
-	
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;pull-and-push&#34;
-	
-	
-&gt;&lt;/p&gt;
-&lt;p&gt;作为目前云原生监控中扛把子的 Prometus 采集数据采用了 Pull 模式，虽然在官方文档 &lt;a class=&#34;link&#34; href=&#34;https://prometheus.io/docs/introduction/faq/#why-do-you-pull-rather-than-push&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;FAQ&lt;/a&gt; 中给出了理由：&lt;/p&gt;
+&lt;/div&gt;&lt;p&gt;&lt;code&gt;DeltaType&lt;/code&gt; 就是 Delta 的类型，有 &lt;a href=&#34;https://github.com/kubernetes/client-go/blob/v0.18.6/tools/cache/delta_fifo.go#L656-L673&#34;&gt;Added、Updated、Deleted、Replaced、Sync &lt;/a&gt;这么几种，其作用是表示Kuberenets资源对象发生了何种变化。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://blog.crazytaxii.com/posts/k8s_client_go_informer2/&#34;&gt;Kubernetes                     Informer           (举报人)                   - DeltaFIFO Queue 篇 · 风与云原生 (crazytaxii.com)&lt;/a&gt;&lt;/p&gt;
+
+    </description>
+    </item>
+    
+    <item>
+    <title>为什么 Promethus 采用了 Pull 模式？</title>
+    <link>/post/why-promethus-using-pull/</link>
+    <pubDate>Thu, 19 May 2022 12:02:44 +0800</pubDate>
+    
+    <guid>/post/why-promethus-using-pull/</guid>
+    <description>
+        &lt;p&gt;在数据监控领域，数据采集端获取到监控目标的数据通常有 &lt;strong&gt;Push&lt;/strong&gt; 和 &lt;strong&gt;Pull&lt;/strong&gt; 两种方案，其中 Push 是由数据产生端根据事件驱动主动向采集端发送数据，而 Pull 是由采集端定时拉取数据。&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; 
+    src=&#34;http://blog-image-1306462451.cos.ap-nanjing.myqcloud.com/why-promethus-pull/pull-and-push.png&#34; 
+    alt=&#34;pull-and-push&#34; 
+     /&gt;&lt;/p&gt;
+&lt;p&gt;作为目前云原生监控中扛把子的 Prometus 采集数据采用了 Pull 模式，虽然在官方文档 &lt;a href=&#34;https://prometheus.io/docs/introduction/faq/#why-do-you-pull-rather-than-push&#34;&gt;FAQ&lt;/a&gt; 中给出了理由：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;可以在笔记本上监控开发时产生的变更&lt;/li&gt;
 &lt;li&gt;如果监控目标宕机了可以更容易被发现&lt;/li&gt;
 &lt;li&gt;可以通过 web 浏览器手工访问监控目标并检查其健康状况&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;但是这些不能说明 Pull 模式的优点，在前段时间在推特上看到了一个关于 Prometheus 采用 Pull 的&lt;a class=&#34;link&#34; href=&#34;https://twitter.com/_a_wing/status/1512451830814437385&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;Twitter讨论&lt;/a&gt;，经过结合官方博客的内容我对其进行了总结&lt;/p&gt;
-&lt;h2 id=&#34;prometheus-的设计理念&#34;&gt;Prometheus 的设计理念&lt;/h2&gt;
+&lt;p&gt;但是这些不能说明 Pull 模式的优点，在前段时间在推特上看到了一个关于 Prometheus 采用 Pull 的&lt;a href=&#34;https://twitter.com/_a_wing/status/1512451830814437385&#34;&gt;Twitter讨论&lt;/a&gt;，经过结合官方博客的内容我对其进行了总结&lt;/p&gt;
+&lt;h2 id=&#34;prometheus-的设计理念&#34;&gt;
+    &lt;a href=&#34;#prometheus-%e7%9a%84%e8%ae%be%e8%ae%a1%e7%90%86%e5%bf%b5&#34; class=&#34;anchor&#34;&gt;
+        &lt;svg class=&#34;icon&#34; aria-hidden=&#34;true&#34; focusable=&#34;false&#34; height=&#34;16&#34; version=&#34;1.1&#34; viewBox=&#34;0 0 16 16&#34; width=&#34;16&#34;&gt;
+            &lt;path fill-rule=&#34;evenodd&#34;
+                d=&#34;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&#34;&gt;
+            &lt;/path&gt;
+        &lt;/svg&gt;
+    &lt;/a&gt;
+    Prometheus 的设计理念
+&lt;/h2&gt;
 &lt;p&gt;Prometheus 的                                                                                                     slogan是「From     metrics   to  insight」，意思是它仅仅关心标准化地采集给定指标的当前状态，而不是导致这些指标的底层事件，所以其不是基于事件的监控系统。&lt;/p&gt;
 &lt;p&gt;例如，计量服务不会发送关于每个 HTTP 请求的消息给 Prometheus 服务器，而是在内存中简单地累加这些请求。每秒可能会发生成百上千次这种累加而不会产生任何监控流量。Prometheus 然后每隔 15 或 30 秒简单地问一下这个服务实例当前状态的累积值而已。监控结果的传输量很小，拉取模式也不会产生问题。&lt;/p&gt;
 &lt;p&gt;如果是基于事件的监控系统，需要在每一个事件「HTTP 请求、异常」发生时立即向监控服务器报告，监控服务器可以汇聚事件为指标或保存事件用于后续处理，例如ELK 。&lt;/p&gt;
-&lt;h2 id=&#34;监控目标的配置更少&#34;&gt;监控目标的配置更少&lt;/h2&gt;
+&lt;h2 id=&#34;监控目标的配置更少&#34;&gt;
+    &lt;a href=&#34;#%e7%9b%91%e6%8e%a7%e7%9b%ae%e6%a0%87%e7%9a%84%e9%85%8d%e7%bd%ae%e6%9b%b4%e5%b0%91&#34; class=&#34;anchor&#34;&gt;
+        &lt;svg class=&#34;icon&#34; aria-hidden=&#34;true&#34; focusable=&#34;false&#34; height=&#34;16&#34; version=&#34;1.1&#34; viewBox=&#34;0 0 16 16&#34; width=&#34;16&#34;&gt;
+            &lt;path fill-rule=&#34;evenodd&#34;
+                d=&#34;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&#34;&gt;
+            &lt;/path&gt;
+        &lt;/svg&gt;
+    &lt;/a&gt;
+    监控目标的配置更少
+&lt;/h2&gt;
 &lt;p&gt;采用 Pull 模式，不用知道监控目标中的具体信息，也不用在监控目标不用维护指标推送的服务，这些工作都由数据采集端统一管理，而采用 Push 模式那么就需要更多的资源。&lt;/p&gt;
 &lt;p&gt;因此，采用 Pull 模式的业务开发中，只需要保证自己服务的数据能够被采集到，采集出错或异常由采集端统一处理。这样对于监控目标的应用开发来说会更简单。&lt;/p&gt;
 &lt;p&gt;Push 模式会要求更多的配置，采集端要知道监控目标，监控目标还要知道数据采集服务器，同时还需要在应用端编写错误处理、连接建立等代码，这大大增加了监控目标的负担。&lt;/p&gt;
-&lt;h2 id=&#34;掌握主动权&#34;&gt;掌握主动权&lt;/h2&gt;
+&lt;h2 id=&#34;掌握主动权&#34;&gt;
+    &lt;a href=&#34;#%e6%8e%8c%e6%8f%a1%e4%b8%bb%e5%8a%a8%e6%9d%83&#34; class=&#34;anchor&#34;&gt;
+        &lt;svg class=&#34;icon&#34; aria-hidden=&#34;true&#34; focusable=&#34;false&#34; height=&#34;16&#34; version=&#34;1.1&#34; viewBox=&#34;0 0 16 16&#34; width=&#34;16&#34;&gt;
+            &lt;path fill-rule=&#34;evenodd&#34;
+                d=&#34;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&#34;&gt;
+            &lt;/path&gt;
+        &lt;/svg&gt;
+    &lt;/a&gt;
+    掌握主动权
+&lt;/h2&gt;
 &lt;p&gt;无论哪种模式，如果发送给时序数据库的数据量超过它的处理能力都会导致服务器宕机。但是存在的区别是， Push 模式通常会由业务开发人员在业务逻辑中编写，由于其水平参差不齐，代码编写存在着问题将会造成对监控服务造成巨大的负载；而监控团队通常就一个 Team，通常是对监控系统的熟悉程度更高，代码质量相对可控，因此 Pull 模式能够将这一部分风险降低。&lt;/p&gt;
-&lt;h2 id=&#34;更好控制数据粒度&#34;&gt;更好控制数据粒度&lt;/h2&gt;
+&lt;h2 id=&#34;更好控制数据粒度&#34;&gt;
+    &lt;a href=&#34;#%e6%9b%b4%e5%a5%bd%e6%8e%a7%e5%88%b6%e6%95%b0%e6%8d%ae%e7%b2%92%e5%ba%a6&#34; class=&#34;anchor&#34;&gt;
+        &lt;svg class=&#34;icon&#34; aria-hidden=&#34;true&#34; focusable=&#34;false&#34; height=&#34;16&#34; version=&#34;1.1&#34; viewBox=&#34;0 0 16 16&#34; width=&#34;16&#34;&gt;
+            &lt;path fill-rule=&#34;evenodd&#34;
+                d=&#34;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&#34;&gt;
+            &lt;/path&gt;
+        &lt;/svg&gt;
+    &lt;/a&gt;
+    更好控制数据粒度
+&lt;/h2&gt;
 &lt;p&gt;pull 模式有更好的控制粒度，能收敛到一个中心点方便治理&lt;/p&gt;
 &lt;p&gt;pull 模式采集到的点都是等粒度的，不管是画图，还是做算法分析，数据预处理的过程都会比较简单&lt;/p&gt;
-&lt;h2 id=&#34;pull-模式的缺点&#34;&gt;Pull 模式的缺点&lt;/h2&gt;
+&lt;h2 id=&#34;pull-模式的缺点&#34;&gt;
+    &lt;a href=&#34;#pull-%e6%a8%a1%e5%bc%8f%e7%9a%84%e7%bc%ba%e7%82%b9&#34; class=&#34;anchor&#34;&gt;
+        &lt;svg class=&#34;icon&#34; aria-hidden=&#34;true&#34; focusable=&#34;false&#34; height=&#34;16&#34; version=&#34;1.1&#34; viewBox=&#34;0 0 16 16&#34; width=&#34;16&#34;&gt;
+            &lt;path fill-rule=&#34;evenodd&#34;
+                d=&#34;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&#34;&gt;
+            &lt;/path&gt;
+        &lt;/svg&gt;
+    &lt;/a&gt;
+    Pull 模式的缺点
+&lt;/h2&gt;
 &lt;p&gt;当然采用 Pull 也会带来一些问题：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;如果监控对于实时要求很高的服务，这种系统拉取确实会导致问题，计量服务必须在拉取的间隔中间缓存事件，拉取的频率也要非常高才能接近推送模式的效果。&lt;/li&gt;
 &lt;li&gt;当应用服务或监控目标的网络不可达「如 IoT 环境」，Pull 模式几乎不可能。这个时候就需要采取 pushgateway 的方式&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;如果必需要使用 Push 模式，Prometheus 提供了 &lt;a class=&#34;link&#34; href=&#34;https://prometheus.io/docs/instrumenting/pushing/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;Pushgateway&lt;/a&gt;的方式，但实际上 pushgateway 和 prometheus 之间依然是 pull 模式。&lt;/p&gt;
-&lt;h2 id=&#34;总结&#34;&gt;总结&lt;/h2&gt;
+&lt;p&gt;如果必需要使用 Push 模式，Prometheus 提供了 &lt;a href=&#34;https://prometheus.io/docs/instrumenting/pushing/&#34;&gt;Pushgateway&lt;/a&gt;的方式，但实际上 pushgateway 和 prometheus 之间依然是 pull 模式。&lt;/p&gt;
+&lt;h2 id=&#34;总结&#34;&gt;
+    &lt;a href=&#34;#%e6%80%bb%e7%bb%93&#34; class=&#34;anchor&#34;&gt;
+        &lt;svg class=&#34;icon&#34; aria-hidden=&#34;true&#34; focusable=&#34;false&#34; height=&#34;16&#34; version=&#34;1.1&#34; viewBox=&#34;0 0 16 16&#34; width=&#34;16&#34;&gt;
+            &lt;path fill-rule=&#34;evenodd&#34;
+                d=&#34;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&#34;&gt;
+            &lt;/path&gt;
+        &lt;/svg&gt;
+    &lt;/a&gt;
+    总结
+&lt;/h2&gt;
 &lt;p&gt;Prometheus 官方并没有对选择 Pull 的方式进行过多的说明，但是显然，Prometheus 的整体设计和数据管理方式也决定了其必定采用 Pull 模式。&lt;/p&gt;
-&lt;h2 id=&#34;reference&#34;&gt;Reference&lt;/h2&gt;
+&lt;h2 id=&#34;reference&#34;&gt;
+    &lt;a href=&#34;#reference&#34; class=&#34;anchor&#34;&gt;
+        &lt;svg class=&#34;icon&#34; aria-hidden=&#34;true&#34; focusable=&#34;false&#34; height=&#34;16&#34; version=&#34;1.1&#34; viewBox=&#34;0 0 16 16&#34; width=&#34;16&#34;&gt;
+            &lt;path fill-rule=&#34;evenodd&#34;
+                d=&#34;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&#34;&gt;
+            &lt;/path&gt;
+        &lt;/svg&gt;
+    &lt;/a&gt;
+    Reference
+&lt;/h2&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://prometheus.io/docs/introduction/faq/#why-do-you-pull-rather-than-push&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;https://prometheus.io/docs/introduction/faq/#why-do-you-pull-rather-than-push&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://prometheus.io/blog/2016/07/23/pull-does-not-scale-or-does-it/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;https://prometheus.io/blog/2016/07/23/pull-does-not-scale-or-does-it/&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://prometheus.io/docs/instrumenting/pushing/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;https://prometheus.io/docs/instrumenting/pushing/&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://twitter.com/_a_wing/status/1512451830814437385&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;https://twitter.com/_a_wing/status/1512451830814437385&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://prometheus.io/docs/introduction/faq/#why-do-you-pull-rather-than-push&#34;&gt;https://prometheus.io/docs/introduction/faq/#why-do-you-pull-rather-than-push&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://prometheus.io/blog/2016/07/23/pull-does-not-scale-or-does-it/&#34;&gt;https://prometheus.io/blog/2016/07/23/pull-does-not-scale-or-does-it/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://prometheus.io/docs/instrumenting/pushing/&#34;&gt;https://prometheus.io/docs/instrumenting/pushing/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://twitter.com/_a_wing/status/1512451830814437385&#34;&gt;https://twitter.com/_a_wing/status/1512451830814437385&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h4 id=&#34;转载申请&#34;&gt;转载申请&lt;/h4&gt;
-&lt;p&gt;本作品采用&lt;a class=&#34;link&#34; href=&#34;http://creativecommons.org/licenses/by/4.0/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;知识共享署名 4.0 国际许可协议&lt;/a&gt;进行许可，转载时请注明原文链接，图片在使用时请保留全部内容，可适当缩放并在引用处附上图片所在的文章链接。&lt;/p&gt;
-</description>
-        </item>
-        <item>
-        <title>我的校招总结</title>
-        <link>/post/my-campus-offer-record/</link>
-        <pubDate>Tue, 26 Apr 2022 15:30:27 +0800</pubDate>
-        
-        <guid>/post/my-campus-offer-record/</guid>
-        <description>&lt;h2 id=&#34;heading&#34;&gt;&lt;/h2&gt;
-&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
-&lt;h2 id=&#34;时间线&#34;&gt;时间线&lt;/h2&gt;
-&lt;h3 id=&#34;heading-1&#34;&gt;&lt;/h3&gt;
-&lt;h2 id=&#34;收获offer&#34;&gt;收获Offer&lt;/h2&gt;
-</description>
-        </item>
-        <item>
-        <title>About</title>
-        <link>/about/</link>
-        <pubDate>Tue, 26 Apr 2022 15:29:47 +0800</pubDate>
-        
-        <guid>/about/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>Articles</title>
-        <link>/articles/</link>
-        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-        
-        <guid>/articles/</guid>
-        <description></description>
-        </item>
-        
-    </channel>
+&lt;h4 id=&#34;转载申请&#34;&gt;
+    &lt;a href=&#34;#%e8%bd%ac%e8%bd%bd%e7%94%b3%e8%af%b7&#34; class=&#34;anchor&#34;&gt;
+        &lt;svg class=&#34;icon&#34; aria-hidden=&#34;true&#34; focusable=&#34;false&#34; height=&#34;16&#34; version=&#34;1.1&#34; viewBox=&#34;0 0 16 16&#34; width=&#34;16&#34;&gt;
+            &lt;path fill-rule=&#34;evenodd&#34;
+                d=&#34;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&#34;&gt;
+            &lt;/path&gt;
+        &lt;/svg&gt;
+    &lt;/a&gt;
+    转载申请
+&lt;/h4&gt;
+&lt;p&gt;本作品采用&lt;a href=&#34;http://creativecommons.org/licenses/by/4.0/&#34;&gt;知识共享署名 4.0 国际许可协议&lt;/a&gt;进行许可，转载时请注明原文链接，图片在使用时请保留全部内容，可适当缩放并在引用处附上图片所在的文章链接。&lt;/p&gt;
+
+    </description>
+    </item>
+    
+  </channel>
 </rss>
