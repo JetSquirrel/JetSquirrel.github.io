@@ -1,152 +1,171 @@
 <!DOCTYPE html>
-<html lang="zh-cn">
-    
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="theme-color" content="dark">
-    <title>Informer Deltafifo 源码解读 | Jett Deng</title>
+<html lang="zh-cn" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='在 Informer开始运行时，Reflector 对象的 store 字段被设置为了 DeltaFIFO 队列对象
+DeltaFIFO的结构定义的源代码如下：
+1 2 3 4 5 6 7 8 9 10 11 12 13 type DeltaFIFO struct { // lock/cond protects access to &amp;#39;items&amp;#39; and &amp;#39;queue&amp;#39;. lock sync.RWMutex cond sync.Cond // We depend on the property that items in the set are in // the queue and vice versa, and that all Deltas in this // map have at least one Delta. items map[string]Deltas queue []string // a lot of code here } DeltaFIFO可以本'><title>Informer Deltafifo 源码解读</title>
 
-    
-    
-    
-    <meta property="og:site_name" content="Jett&#39;s Blog" />
-    <meta property="og:title" content="Informer Deltafifo 源码解读 | Jett Deng"/>
-    <meta itemprop="name" content="Informer Deltafifo 源码解读 | Jett Deng" />
-    <meta name="twitter:title" content="Informer Deltafifo 源码解读 | Jett Deng" />
-    <meta name="application-name" content="Informer Deltafifo 源码解读 | Jett Deng" /><meta name="twitter:card" content="summary"/>
+<link rel='canonical' href='/post/k8s-source-code-informer-deltafifo/'>
 
-    <meta name="description" content="Hugo is Absurdly Fast!" />
-    <meta name="twitter:description" content="Hugo is Absurdly Fast!"/>
-    <meta itemprop="description" content="Hugo is Absurdly Fast!"/>
-    <meta property="og:description" content="Hugo is Absurdly Fast!" />
-
-    
-
-<meta property="og:type" content="article" />
-<meta property="article:publisher" content="Jett Deng" />
-<meta property="og:article:published_time" content=2022-05-19T22:16:06&#43;0800 />
-<meta property="article:published_time" content=2022-05-19T22:16:06&#43;0800 />
-
-
-
-
-
-<script defer type="application/ld+json">
-  {
-    "@context": "http://schema.org",
-    "@type": "Article",
-    "headline": "Informer Deltafifo 源码解读",
-    "author": {
-      "@type": "Person",
-      "name": "Jett Deng"
-    },
-    "datePublished": "2022-05-19",
-    "description": "",
-    "wordCount":  204 ,
-    "mainEntityOfPage": "True",
-    "dateModified": "2022-05-19",
-    "publisher": {
-      "@type": "Organization",
-      "name": "Jett Deng",
-      "logo": {
-        "@type": "imageObject",
-        "url": "favicon.ico"
-      }
-    }
-  }
-</script>
-
-
-
-    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
-    
-    <link rel="stylesheet" href="/sass/main.min.ab99ff095f832511e24ffb2fba2b51ad473b2f7e9301d674eba2c6c3a6e8bd81.css">
-    
-</head>
-    
+<link rel="stylesheet" href="/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css"><meta property='og:title' content='Informer Deltafifo 源码解读'>
+<meta property='og:description' content='在 Informer开始运行时，Reflector 对象的 store 字段被设置为了 DeltaFIFO 队列对象
+DeltaFIFO的结构定义的源代码如下：
+1 2 3 4 5 6 7 8 9 10 11 12 13 type DeltaFIFO struct { // lock/cond protects access to &amp;#39;items&amp;#39; and &amp;#39;queue&amp;#39;. lock sync.RWMutex cond sync.Cond // We depend on the property that items in the set are in // the queue and vice versa, and that all Deltas in this // map have at least one Delta. items map[string]Deltas queue []string // a lot of code here } DeltaFIFO可以本'>
+<meta property='og:url' content='/post/k8s-source-code-informer-deltafifo/'>
+<meta property='og:site_name' content='Jett Deng'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2022-05-19T22:16:06&#43;08:00'/><meta property='article:modified_time' content='2022-05-19T22:16:06&#43;08:00'/>
+<meta name="twitter:title" content="Informer Deltafifo 源码解读">
+<meta name="twitter:description" content="在 Informer开始运行时，Reflector 对象的 store 字段被设置为了 DeltaFIFO 队列对象
+DeltaFIFO的结构定义的源代码如下：
+1 2 3 4 5 6 7 8 9 10 11 12 13 type DeltaFIFO struct { // lock/cond protects access to &amp;#39;items&amp;#39; and &amp;#39;queue&amp;#39;. lock sync.RWMutex cond sync.Cond // We depend on the property that items in the set are in // the queue and vice versa, and that all Deltas in this // map have at least one Delta. items map[string]Deltas queue []string // a lot of code here } DeltaFIFO可以本">
+    </head>
+    <body class="
+    article-page
+    ">
     <script>
         (function() {
-            const colorSchemeKey = 'ThemeColorScheme';
+            const colorSchemeKey = 'StackColorScheme';
             if(!localStorage.getItem(colorSchemeKey)){
                 localStorage.setItem(colorSchemeKey, "auto");
             }
         })();
     </script><script>
     (function() {
-        const colorSchemeKey = 'ThemeColorScheme';
+        const colorSchemeKey = 'StackColorScheme';
         const colorSchemeItem = localStorage.getItem(colorSchemeKey);
         const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
 
         if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
             
 
-            document.documentElement.dataset.userColorScheme = 'dark';
+            document.documentElement.dataset.scheme = 'dark';
         } else {
-            document.documentElement.dataset.userColorScheme = 'light';
+            document.documentElement.dataset.scheme = 'light';
         }
     })();
 </script>
+<div class="container main-container flex on-phone--column compact"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
 
-
-    <body class="dark">
-        <nav class="navbar">
-    <div class="container">
-        <div class="flex">
-            <div>
-                <a class="brand" href="/">
-                    
-                    
-                        <img src="/image/squirrel.png" />
-                    
-                    Jett Deng
-                    </a>
-            </div>
-            <div class="flex">
-                
-                <a href="/articles/">Articles</a>
-                
-                
-                    <button id="dark-mode-button">
-                    <svg class="light" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 36 36"><path fill="#FFD983" d="M30.312.776C32 19 20 32 .776 30.312c8.199 7.717 21.091 7.588 29.107-.429C37.9 21.867 38.03 8.975 30.312.776z"/><path d="M30.705 15.915a1.163 1.163 0 1 0 1.643 1.641a1.163 1.163 0 0 0-1.643-1.641zm-16.022 14.38a1.74 1.74 0 0 0 0 2.465a1.742 1.742 0 1 0 0-2.465zm13.968-2.147a2.904 2.904 0 0 1-4.108 0a2.902 2.902 0 0 1 0-4.107a2.902 2.902 0 0 1 4.108 0a2.902 2.902 0 0 1 0 4.107z" fill="#FFCC4D"/><rect x="0" y="0" width="36" height="36" fill="rgba(0, 0, 0, 0)" /></svg>
-                    <svg class="dark" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 36 36"><path fill="#FFD983" d="M16 2s0-2 2-2s2 2 2 2v2s0 2-2 2s-2-2-2-2V2zm18 14s2 0 2 2s-2 2-2 2h-2s-2 0-2-2s2-2 2-2h2zM4 16s2 0 2 2s-2 2-2 2H2s-2 0-2-2s2-2 2-2h2zm5.121-8.707s1.414 1.414 0 2.828s-2.828 0-2.828 0L4.878 8.708s-1.414-1.414 0-2.829c1.415-1.414 2.829 0 2.829 0l1.414 1.414zm21 21s1.414 1.414 0 2.828s-2.828 0-2.828 0l-1.414-1.414s-1.414-1.414 0-2.828s2.828 0 2.828 0l1.414 1.414zm-.413-18.172s-1.414 1.414-2.828 0s0-2.828 0-2.828l1.414-1.414s1.414-1.414 2.828 0s0 2.828 0 2.828l-1.414 1.414zm-21 21s-1.414 1.414-2.828 0s0-2.828 0-2.828l1.414-1.414s1.414-1.414 2.828 0s0 2.828 0 2.828l-1.414 1.414zM16 32s0-2 2-2s2 2 2 2v2s0 2-2 2s-2-2-2-2v-2z"/><circle fill="#FFD983" cx="18" cy="18" r="10"/><rect x="0" y="0" width="36" height="36" fill="rgba(0, 0, 0, 0)" /></svg>
-                    </button>
-                
-            </div>
-            </div>
-    </div>
-</nav>
-
-        <main>
+    <header>
+        
             
-<div class="container">
-    <article>
-        <header class="article-header">
-            <div class="thumb">
-                <div>
-                    <h1>Informer Deltafifo 源码解读</h1>
-                    <div class="post-meta">
-                        <div>
-                            
-                            
-                              
-                            
-                            By Jett Deng | <time>May 19, 2022</time>
-                            | 1 minutes
-                        </div>
-                        <div class="tags">
-                            
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </header>
-    </article>
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_huda2458f72ce188392d75c5d51cd8e24e_373_300x0_resize_box_3.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Jett Deng</a></h1>
+            <h2 class="site-description"></h2>
+        </div>
+    </header><ol class="menu" id="main-menu">
+        
+        
 
-    <div class="article-post">
-    <p>在 Informer开始运行时，<code>Reflector</code> 对象的 <code>store</code> 字段被设置为了 <a href="https://github.com/kubernetes/client-go/blob/v0.18.6/tools/cache/shared_informer.go#L336-L378">DeltaFIFO 队列对象</a></p>
-<p>DeltaFIFO的结构定义的<a href="https://github.com/kubernetes/client-go/blob/v0.18.6/tools/cache/delta_fifo.go#L158-L192">源代码</a>如下：</p>
+        <div class="menu-bottom-section">
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>Dark Mode</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/post/k8s-source-code-informer-deltafifo/">Informer Deltafifo 源码解读</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">May 19, 2022</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    1 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+    
+    <p>在 Informer开始运行时，<code>Reflector</code> 对象的 <code>store</code> 字段被设置为了 <a class="link" href="https://github.com/kubernetes/client-go/blob/v0.18.6/tools/cache/shared_informer.go#L336-L378"  target="_blank" rel="noopener"
+    >DeltaFIFO 队列对象</a></p>
+<p>DeltaFIFO的结构定义的<a class="link" href="https://github.com/kubernetes/client-go/blob/v0.18.6/tools/cache/delta_fifo.go#L158-L192"  target="_blank" rel="noopener"
+    >源代码</a>如下：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -180,12 +199,13 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>DeltaFIFO可以本</p>
-<p>可以看到 <a href="siyuan://blocks/20220509122523-zsk961s">&ldquo;DeltaFIFO&rdquo;</a>可以拆分开分为两个部分来理解 [<a href="siyuan://blocks/20220509115438-pbyetvk">&ldquo;1&rdquo;</a>]</p>
+<p>可以看到 <a class="link" href="siyuan://blocks/20220509122523-zsk961s" >&ldquo;DeltaFIFO&rdquo;</a>可以拆分开分为两个部分来理解 [<a class="link" href="siyuan://blocks/20220509115438-pbyetvk" >&ldquo;1&rdquo;</a>]</p>
 <ul>
 <li>Delta：用于保存资源消费类型的资源对象存储</li>
 <li>FIFO：一个字符串队列</li>
 </ul>
-<p>其中Deltas的键值对，其<a href="http://127.0.0.1:6806/%5B*%5D(https://github.com/kubernetes/client-go/blob/v0.18.6/tools/cache/delta_fifo.go#L675-L683)">源代码</a>如下：</p>
+<p>其中Deltas的键值对，其<a class="link" href="http://127.0.0.1:6806/%5B%5c*%5D%28https://github.com/kubernetes/client-go/blob/v0.18.6/tools/cache/delta_fifo.go#L675-L683%29"  target="_blank" rel="noopener"
+    >源代码</a>如下：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -218,54 +238,144 @@
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><code>DeltaType</code> 就是 Delta 的类型，有 <a href="https://github.com/kubernetes/client-go/blob/v0.18.6/tools/cache/delta_fifo.go#L656-L673">Added、Updated、Deleted、Replaced、Sync </a>这么几种，其作用是表示Kuberenets资源对象发生了何种变化。</p>
-<p><a href="https://blog.crazytaxii.com/posts/k8s_client_go_informer2/">Kubernetes                     Informer           (举报人)                   - DeltaFIFO Queue 篇 · 风与云原生 (crazytaxii.com)</a></p>
+</div><p><code>DeltaType</code> 就是 Delta 的类型，有 <a class="link" href="https://github.com/kubernetes/client-go/blob/v0.18.6/tools/cache/delta_fifo.go#L656-L673"  target="_blank" rel="noopener"
+    >Added、Updated、Deleted、Replaced、Sync </a>这么几种，其作用是表示Kuberenets资源对象发生了何种变化。</p>
+<p><a class="link" href="https://blog.crazytaxii.com/posts/k8s_client_go_informer2/"  target="_blank" rel="noopener"
+    >Kubernetes                     Informer           (举报人)                   - DeltaFIFO Queue 篇 · 风与云原生 (crazytaxii.com)</a></p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2022 Jett Deng
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.11.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
 
     </div>
-</div>
 
-<div class="container">
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
     
-    <nav class="flex container suggested">
-        
-        <a rel="prev" href="/post/pets-and-cattle/" title="Previous post (older)">
-            <span>Previous</span>
-            宠物和牲畜带来的思考
-            </a>
-        
-        
-        
-        <a rel="next" href="/post/test/" title="Next post (newer)">
-            <span>Next</span>
-            Test
-            </a> 
-        
-    </nav>
-    
-</div>
- 
-<div class="container">
-    
-</div>
 
-</main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
 
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
 
-        </main>
-        <footer class="footer flex">
-    <section class="container">
-        <nav class="footer-links">
-            
-            <a href="/index.xml">RSS</a>
-            
-        </nav>
-
-        
-    </section>
-    <script defer src="/ts/features.dd8e5b18a6dda91367e396fd8dc9b9f83a1993065f709a53e056e0f2e9096ea1.js" 
-    data-enable-footnotes="true"
-    ></script>
-</footer>
+        document.head.appendChild(customFont);
+    }());
+</script>
 
     </body>
 </html>

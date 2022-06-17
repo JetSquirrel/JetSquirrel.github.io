@@ -1,312 +1,382 @@
 <!DOCTYPE html>
-<html lang="zh-cn">
-    
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="theme-color" content="dark">
-    <title>为什么 Promethus 采用了 Pull 模式？ | Jett Deng</title>
+<html lang="zh-cn" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='在数据监控领域，数据采集端获取到监控目标的数据通常有 Push 和 Pull 两种方案，其中 Push 是由数据产生端根据事件驱动主动向采集端发送数据，而 Pull 是由采集端定时拉取数据。
+作为目前云原生监控中扛把子的 Prometus 采集数据采用了 Pull 模式，虽然在官方文档 FAQ 中给出了理由：
+可以在笔记本上监控开发时产生的变更 如果监控目标宕机了可以更容易被发现 可以通过 web 浏览器手工访问监控目标并检查其健康状况 但是这些不能说明 Pull 模式的优点，在前段时间在推特上看到了一个关于 Prometheus 采用 Pull 的Twitter讨论，经过结合官方博客的内容我对其进行了总结
+Prometheus 的设计理念 Prometheus 的 slogan是「From metrics to insight」，意思是它仅仅关心标准化地采集给定指标的当前状态，而不是导致这些指标的底层事件，所以其不是基于事件的监控系统。
+例如，计量服务不会发送关于每个 HTTP 请求的消息给 Prometheus 服务器，而是在内存中简单地累加这些请求。每秒可能会发生成百上千次这种累加而不会产生任何监控流量。Prometheus 然后每隔 15 或 30 秒简单地问一下这个服务实例当前状态的累积值而已。监控结果的传输量很小，拉取模式也不会产生问题。
+如果是基于事件的监控系统，需要在每一个事件「HTTP 请求、异常」发生时立即向监控服务器报告，监控服务器可以汇聚事件为指标或保存事件用于后续处理，例如ELK 。
+监控目标的配置更少 采用 Pull 模式，不用知道监控目标中的具体信息，也不用在监控目标不用维护指标推送的服务，这些工作都由数据采集端统一管理，而采用 Push 模式那么就需要更多的资源。
+因此，采用 Pull 模式的业务开发中，只需要保证自己服务的数据能够被采集到，采集出错或异常由采集端统一处理。这样对于监控目标的应用开发来说会更简单。
+Push 模式会要求更多的配置，采集端要知道监控目标，监控目标还要知道数据采集服务器，同时还需要在应用端编写错误处理、连接建立等代码，这大大增加了监控目标的负担。
+掌握主动权 无论哪种模式，如果发送给时序数据库的数据量超过它的处理能力都会导致服务器宕机。但是存在的区别是， Push 模式通常会由业务开发人员在业务逻辑中编写，由于其水平参差不齐，代码编写存在着问题将会造成对监控服务造成巨大的负载；而监控团队通常就一个 Team，通常是对监控系统的熟悉程度更高，代码质量相对可控，因此 Pull 模式能够将这一部分风险降低。
+更好控制数据粒度 pull 模式有更好的控制粒度，能收敛到一个中心点方便治理'><title>为什么 Promethus 采用了 Pull 模式？</title>
 
-    
-    
-    
-    <meta property="og:site_name" content="Jett&#39;s Blog" />
-    <meta property="og:title" content="为什么 Promethus 采用了 Pull 模式？ | Jett Deng"/>
-    <meta itemprop="name" content="为什么 Promethus 采用了 Pull 模式？ | Jett Deng" />
-    <meta name="twitter:title" content="为什么 Promethus 采用了 Pull 模式？ | Jett Deng" />
-    <meta name="application-name" content="为什么 Promethus 采用了 Pull 模式？ | Jett Deng" /><meta name="twitter:card" content="summary"/>
+<link rel='canonical' href='/post/why-promethus-using-pull/'>
 
-    <meta name="description" content="Hugo is Absurdly Fast!" />
-    <meta name="twitter:description" content="Hugo is Absurdly Fast!"/>
-    <meta itemprop="description" content="Hugo is Absurdly Fast!"/>
-    <meta property="og:description" content="Hugo is Absurdly Fast!" />
-
-    
-
-<meta property="og:type" content="article" />
-<meta property="article:publisher" content="Jett Deng" />
-<meta property="og:article:published_time" content=2022-05-19T12:02:44&#43;0800 />
-<meta property="article:published_time" content=2022-05-19T12:02:44&#43;0800 />
-
-
-
-
-
-<script defer type="application/ld+json">
-  {
-    "@context": "http://schema.org",
-    "@type": "Article",
-    "headline": "为什么 Promethus 采用了 Pull 模式？",
-    "author": {
-      "@type": "Person",
-      "name": "Jett Deng"
-    },
-    "datePublished": "2022-05-19",
-    "description": "",
-    "wordCount":  147 ,
-    "mainEntityOfPage": "True",
-    "dateModified": "2022-05-19",
-    "publisher": {
-      "@type": "Organization",
-      "name": "Jett Deng",
-      "logo": {
-        "@type": "imageObject",
-        "url": "favicon.ico"
-      }
-    }
-  }
-</script>
-
-
-
-    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
-    
-    <link rel="stylesheet" href="/sass/main.min.ab99ff095f832511e24ffb2fba2b51ad473b2f7e9301d674eba2c6c3a6e8bd81.css">
-    
-</head>
-    
+<link rel="stylesheet" href="/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css"><meta property='og:title' content='为什么 Promethus 采用了 Pull 模式？'>
+<meta property='og:description' content='在数据监控领域，数据采集端获取到监控目标的数据通常有 Push 和 Pull 两种方案，其中 Push 是由数据产生端根据事件驱动主动向采集端发送数据，而 Pull 是由采集端定时拉取数据。
+作为目前云原生监控中扛把子的 Prometus 采集数据采用了 Pull 模式，虽然在官方文档 FAQ 中给出了理由：
+可以在笔记本上监控开发时产生的变更 如果监控目标宕机了可以更容易被发现 可以通过 web 浏览器手工访问监控目标并检查其健康状况 但是这些不能说明 Pull 模式的优点，在前段时间在推特上看到了一个关于 Prometheus 采用 Pull 的Twitter讨论，经过结合官方博客的内容我对其进行了总结
+Prometheus 的设计理念 Prometheus 的 slogan是「From metrics to insight」，意思是它仅仅关心标准化地采集给定指标的当前状态，而不是导致这些指标的底层事件，所以其不是基于事件的监控系统。
+例如，计量服务不会发送关于每个 HTTP 请求的消息给 Prometheus 服务器，而是在内存中简单地累加这些请求。每秒可能会发生成百上千次这种累加而不会产生任何监控流量。Prometheus 然后每隔 15 或 30 秒简单地问一下这个服务实例当前状态的累积值而已。监控结果的传输量很小，拉取模式也不会产生问题。
+如果是基于事件的监控系统，需要在每一个事件「HTTP 请求、异常」发生时立即向监控服务器报告，监控服务器可以汇聚事件为指标或保存事件用于后续处理，例如ELK 。
+监控目标的配置更少 采用 Pull 模式，不用知道监控目标中的具体信息，也不用在监控目标不用维护指标推送的服务，这些工作都由数据采集端统一管理，而采用 Push 模式那么就需要更多的资源。
+因此，采用 Pull 模式的业务开发中，只需要保证自己服务的数据能够被采集到，采集出错或异常由采集端统一处理。这样对于监控目标的应用开发来说会更简单。
+Push 模式会要求更多的配置，采集端要知道监控目标，监控目标还要知道数据采集服务器，同时还需要在应用端编写错误处理、连接建立等代码，这大大增加了监控目标的负担。
+掌握主动权 无论哪种模式，如果发送给时序数据库的数据量超过它的处理能力都会导致服务器宕机。但是存在的区别是， Push 模式通常会由业务开发人员在业务逻辑中编写，由于其水平参差不齐，代码编写存在着问题将会造成对监控服务造成巨大的负载；而监控团队通常就一个 Team，通常是对监控系统的熟悉程度更高，代码质量相对可控，因此 Pull 模式能够将这一部分风险降低。
+更好控制数据粒度 pull 模式有更好的控制粒度，能收敛到一个中心点方便治理'>
+<meta property='og:url' content='/post/why-promethus-using-pull/'>
+<meta property='og:site_name' content='Jett Deng'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2022-05-19T12:02:44&#43;08:00'/><meta property='article:modified_time' content='2022-05-19T12:02:44&#43;08:00'/>
+<meta name="twitter:title" content="为什么 Promethus 采用了 Pull 模式？">
+<meta name="twitter:description" content="在数据监控领域，数据采集端获取到监控目标的数据通常有 Push 和 Pull 两种方案，其中 Push 是由数据产生端根据事件驱动主动向采集端发送数据，而 Pull 是由采集端定时拉取数据。
+作为目前云原生监控中扛把子的 Prometus 采集数据采用了 Pull 模式，虽然在官方文档 FAQ 中给出了理由：
+可以在笔记本上监控开发时产生的变更 如果监控目标宕机了可以更容易被发现 可以通过 web 浏览器手工访问监控目标并检查其健康状况 但是这些不能说明 Pull 模式的优点，在前段时间在推特上看到了一个关于 Prometheus 采用 Pull 的Twitter讨论，经过结合官方博客的内容我对其进行了总结
+Prometheus 的设计理念 Prometheus 的 slogan是「From metrics to insight」，意思是它仅仅关心标准化地采集给定指标的当前状态，而不是导致这些指标的底层事件，所以其不是基于事件的监控系统。
+例如，计量服务不会发送关于每个 HTTP 请求的消息给 Prometheus 服务器，而是在内存中简单地累加这些请求。每秒可能会发生成百上千次这种累加而不会产生任何监控流量。Prometheus 然后每隔 15 或 30 秒简单地问一下这个服务实例当前状态的累积值而已。监控结果的传输量很小，拉取模式也不会产生问题。
+如果是基于事件的监控系统，需要在每一个事件「HTTP 请求、异常」发生时立即向监控服务器报告，监控服务器可以汇聚事件为指标或保存事件用于后续处理，例如ELK 。
+监控目标的配置更少 采用 Pull 模式，不用知道监控目标中的具体信息，也不用在监控目标不用维护指标推送的服务，这些工作都由数据采集端统一管理，而采用 Push 模式那么就需要更多的资源。
+因此，采用 Pull 模式的业务开发中，只需要保证自己服务的数据能够被采集到，采集出错或异常由采集端统一处理。这样对于监控目标的应用开发来说会更简单。
+Push 模式会要求更多的配置，采集端要知道监控目标，监控目标还要知道数据采集服务器，同时还需要在应用端编写错误处理、连接建立等代码，这大大增加了监控目标的负担。
+掌握主动权 无论哪种模式，如果发送给时序数据库的数据量超过它的处理能力都会导致服务器宕机。但是存在的区别是， Push 模式通常会由业务开发人员在业务逻辑中编写，由于其水平参差不齐，代码编写存在着问题将会造成对监控服务造成巨大的负载；而监控团队通常就一个 Team，通常是对监控系统的熟悉程度更高，代码质量相对可控，因此 Pull 模式能够将这一部分风险降低。
+更好控制数据粒度 pull 模式有更好的控制粒度，能收敛到一个中心点方便治理">
+    </head>
+    <body class="
+    article-page
+    ">
     <script>
         (function() {
-            const colorSchemeKey = 'ThemeColorScheme';
+            const colorSchemeKey = 'StackColorScheme';
             if(!localStorage.getItem(colorSchemeKey)){
                 localStorage.setItem(colorSchemeKey, "auto");
             }
         })();
     </script><script>
     (function() {
-        const colorSchemeKey = 'ThemeColorScheme';
+        const colorSchemeKey = 'StackColorScheme';
         const colorSchemeItem = localStorage.getItem(colorSchemeKey);
         const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
 
         if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
             
 
-            document.documentElement.dataset.userColorScheme = 'dark';
+            document.documentElement.dataset.scheme = 'dark';
         } else {
-            document.documentElement.dataset.userColorScheme = 'light';
+            document.documentElement.dataset.scheme = 'light';
         }
     })();
 </script>
+<div class="container main-container flex on-phone--column compact"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
 
-
-    <body class="dark">
-        <nav class="navbar">
-    <div class="container">
-        <div class="flex">
-            <div>
-                <a class="brand" href="/">
-                    
-                    
-                        <img src="/image/squirrel.png" />
-                    
-                    Jett Deng
-                    </a>
-            </div>
-            <div class="flex">
-                
-                <a href="/articles/">Articles</a>
-                
-                
-                    <button id="dark-mode-button">
-                    <svg class="light" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 36 36"><path fill="#FFD983" d="M30.312.776C32 19 20 32 .776 30.312c8.199 7.717 21.091 7.588 29.107-.429C37.9 21.867 38.03 8.975 30.312.776z"/><path d="M30.705 15.915a1.163 1.163 0 1 0 1.643 1.641a1.163 1.163 0 0 0-1.643-1.641zm-16.022 14.38a1.74 1.74 0 0 0 0 2.465a1.742 1.742 0 1 0 0-2.465zm13.968-2.147a2.904 2.904 0 0 1-4.108 0a2.902 2.902 0 0 1 0-4.107a2.902 2.902 0 0 1 4.108 0a2.902 2.902 0 0 1 0 4.107z" fill="#FFCC4D"/><rect x="0" y="0" width="36" height="36" fill="rgba(0, 0, 0, 0)" /></svg>
-                    <svg class="dark" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 36 36"><path fill="#FFD983" d="M16 2s0-2 2-2s2 2 2 2v2s0 2-2 2s-2-2-2-2V2zm18 14s2 0 2 2s-2 2-2 2h-2s-2 0-2-2s2-2 2-2h2zM4 16s2 0 2 2s-2 2-2 2H2s-2 0-2-2s2-2 2-2h2zm5.121-8.707s1.414 1.414 0 2.828s-2.828 0-2.828 0L4.878 8.708s-1.414-1.414 0-2.829c1.415-1.414 2.829 0 2.829 0l1.414 1.414zm21 21s1.414 1.414 0 2.828s-2.828 0-2.828 0l-1.414-1.414s-1.414-1.414 0-2.828s2.828 0 2.828 0l1.414 1.414zm-.413-18.172s-1.414 1.414-2.828 0s0-2.828 0-2.828l1.414-1.414s1.414-1.414 2.828 0s0 2.828 0 2.828l-1.414 1.414zm-21 21s-1.414 1.414-2.828 0s0-2.828 0-2.828l1.414-1.414s1.414-1.414 2.828 0s0 2.828 0 2.828l-1.414 1.414zM16 32s0-2 2-2s2 2 2 2v2s0 2-2 2s-2-2-2-2v-2z"/><circle fill="#FFD983" cx="18" cy="18" r="10"/><rect x="0" y="0" width="36" height="36" fill="rgba(0, 0, 0, 0)" /></svg>
-                    </button>
-                
-            </div>
-            </div>
-    </div>
-</nav>
-
-        <main>
+    <header>
+        
             
-<div class="container">
-    <article>
-        <header class="article-header">
-            <div class="thumb">
-                <div>
-                    <h1>为什么 Promethus 采用了 Pull 模式？</h1>
-                    <div class="post-meta">
-                        <div>
-                            
-                            
-                              
-                            
-                            By Jett Deng | <time>May 19, 2022</time>
-                            | 1 minutes
-                        </div>
-                        <div class="tags">
-                            
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </header>
-    </article>
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_huda2458f72ce188392d75c5d51cd8e24e_373_300x0_resize_box_3.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Jett Deng</a></h1>
+            <h2 class="site-description"></h2>
+        </div>
+    </header><ol class="menu" id="main-menu">
+        
+        
 
-    <div class="article-post">
-    <p>在数据监控领域，数据采集端获取到监控目标的数据通常有 Push 和 Pull 两种方案，其中 Push 是由数据产生端根据事件驱动主动向采集端发送数据，而 Pull 是由采集端定时拉取数据。</p>
-<p><img loading="lazy" 
-    src="http://blog-image-1306462451.cos.ap-nanjing.myqcloud.com/why-promethus-pull/pull-and-push.png" 
-    alt="pull-and-push" 
-     /></p>
-<p>作为目前云原生监控中扛把子的 Prometus 采集数据采用了 Pull 模式，虽然在官方文档 FAQ](<a href="https://prometheus.io/docs/introduction/faq/#why-do-you-pull-rather-than-push">https://prometheus.io/docs/introduction/faq/#why-do-you-pull-rather-than-push</a>) 中给出了理由：</p>
+        <div class="menu-bottom-section">
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>Dark Mode</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/post/why-promethus-using-pull/">为什么 Promethus 采用了 Pull 模式？</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">May 19, 2022</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    1 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+    
+    <p>在数据监控领域，数据采集端获取到监控目标的数据通常有 <strong>Push</strong> 和 <strong>Pull</strong> 两种方案，其中 Push 是由数据产生端根据事件驱动主动向采集端发送数据，而 Pull 是由采集端定时拉取数据。</p>
+<p><img src="/http:/blog-image-1306462451.cos.ap-nanjing.myqcloud.com/why-promethus-pull/pull-and-push.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="pull-and-push"
+	
+	
+></p>
+<p>作为目前云原生监控中扛把子的 Prometus 采集数据采用了 Pull 模式，虽然在官方文档 <a class="link" href="https://prometheus.io/docs/introduction/faq/#why-do-you-pull-rather-than-push"  target="_blank" rel="noopener"
+    >FAQ</a> 中给出了理由：</p>
 <ul>
 <li>可以在笔记本上监控开发时产生的变更</li>
 <li>如果监控目标宕机了可以更容易被发现</li>
 <li>可以通过 web 浏览器手工访问监控目标并检查其健康状况</li>
 </ul>
-<p>但是这些不能说明 Pull 模式的优点，在前段时间在推特上看到了一个关于 Prometheus 采用 Pull 的<a href="https://twitter.com/_a_wing/status/1512451830814437385">                                                                                                                        Twitter           (推特)                             (推特)                             (推特)                             (推特)                             (推特)                             (推特)                  讨论</a>，经过结合官方博客的内容我对其进行了总结</p>
-<h2 id="prometheus-的设计理念">
-    <a href="#prometheus-%e7%9a%84%e8%ae%be%e8%ae%a1%e7%90%86%e5%bf%b5" class="anchor">
-        <svg class="icon" aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16">
-            <path fill-rule="evenodd"
-                d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z">
-            </path>
-        </svg>
-    </a>
-    Prometheus 的设计理念
-</h2>
-<p>Prometheus 的                                                                                                     slogan           (口号)                             (口号)                             (口号)                             (口号)                             (口号)                   是「From                                                                                                     metrics           (公制)                             (公制)                             (公制)                             (公制)                             (公制)                   to insight」，它仅仅关心标准化地采集给定指标的当前状态，而不是导致这些指标的底层事件，所以其不是基于事件的监控系统。</p>
+<p>但是这些不能说明 Pull 模式的优点，在前段时间在推特上看到了一个关于 Prometheus 采用 Pull 的<a class="link" href="https://twitter.com/_a_wing/status/1512451830814437385"  target="_blank" rel="noopener"
+    >Twitter讨论</a>，经过结合官方博客的内容我对其进行了总结</p>
+<h2 id="prometheus-的设计理念">Prometheus 的设计理念</h2>
+<p>Prometheus 的                                                                                                     slogan是「From     metrics   to  insight」，意思是它仅仅关心标准化地采集给定指标的当前状态，而不是导致这些指标的底层事件，所以其不是基于事件的监控系统。</p>
 <p>例如，计量服务不会发送关于每个 HTTP 请求的消息给 Prometheus 服务器，而是在内存中简单地累加这些请求。每秒可能会发生成百上千次这种累加而不会产生任何监控流量。Prometheus 然后每隔 15 或 30 秒简单地问一下这个服务实例当前状态的累积值而已。监控结果的传输量很小，拉取模式也不会产生问题。</p>
-<p>如果是基于事件的监控系统，需要在每一个事件「HTTP 请求、异常」发生时立即向监控服务器报告，监控服务器可以汇聚事件为指标或保存事件用于后续处理「例如                                                                                                    ELK           (麋鹿)                             (麋鹿)                             (麋鹿)                             (麋鹿)                             (麋鹿)                  」。</p>
-<h2 id="监控目标的配置更少">
-    <a href="#%e7%9b%91%e6%8e%a7%e7%9b%ae%e6%a0%87%e7%9a%84%e9%85%8d%e7%bd%ae%e6%9b%b4%e5%b0%91" class="anchor">
-        <svg class="icon" aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16">
-            <path fill-rule="evenodd"
-                d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z">
-            </path>
-        </svg>
-    </a>
-    监控目标的配置更少
-</h2>
+<p>如果是基于事件的监控系统，需要在每一个事件「HTTP 请求、异常」发生时立即向监控服务器报告，监控服务器可以汇聚事件为指标或保存事件用于后续处理，例如ELK 。</p>
+<h2 id="监控目标的配置更少">监控目标的配置更少</h2>
 <p>采用 Pull 模式，不用知道监控目标中的具体信息，也不用在监控目标不用维护指标推送的服务，这些工作都由数据采集端统一管理，而采用 Push 模式那么就需要更多的资源。</p>
 <p>因此，采用 Pull 模式的业务开发中，只需要保证自己服务的数据能够被采集到，采集出错或异常由采集端统一处理。这样对于监控目标的应用开发来说会更简单。</p>
 <p>Push 模式会要求更多的配置，采集端要知道监控目标，监控目标还要知道数据采集服务器，同时还需要在应用端编写错误处理、连接建立等代码，这大大增加了监控目标的负担。</p>
-<h2 id="掌握主动权">
-    <a href="#%e6%8e%8c%e6%8f%a1%e4%b8%bb%e5%8a%a8%e6%9d%83" class="anchor">
-        <svg class="icon" aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16">
-            <path fill-rule="evenodd"
-                d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z">
-            </path>
-        </svg>
-    </a>
-    掌握主动权
-</h2>
+<h2 id="掌握主动权">掌握主动权</h2>
 <p>无论哪种模式，如果发送给时序数据库的数据量超过它的处理能力都会导致服务器宕机。但是存在的区别是， Push 模式通常会由业务开发人员在业务逻辑中编写，由于其水平参差不齐，代码编写存在着问题将会造成对监控服务造成巨大的负载；而监控团队通常就一个 Team，通常是对监控系统的熟悉程度更高，代码质量相对可控，因此 Pull 模式能够将这一部分风险降低。</p>
-<h2 id="更好控制数据粒度">
-    <a href="#%e6%9b%b4%e5%a5%bd%e6%8e%a7%e5%88%b6%e6%95%b0%e6%8d%ae%e7%b2%92%e5%ba%a6" class="anchor">
-        <svg class="icon" aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16">
-            <path fill-rule="evenodd"
-                d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z">
-            </path>
-        </svg>
-    </a>
-    更好控制数据粒度
-</h2>
+<h2 id="更好控制数据粒度">更好控制数据粒度</h2>
 <p>pull 模式有更好的控制粒度，能收敛到一个中心点方便治理</p>
 <p>pull 模式采集到的点都是等粒度的，不管是画图，还是做算法分析，数据预处理的过程都会比较简单</p>
-<h2 id="pull-模式的缺点">
-    <a href="#pull-%e6%a8%a1%e5%bc%8f%e7%9a%84%e7%bc%ba%e7%82%b9" class="anchor">
-        <svg class="icon" aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16">
-            <path fill-rule="evenodd"
-                d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z">
-            </path>
-        </svg>
-    </a>
-    Pull 模式的缺点
-</h2>
+<h2 id="pull-模式的缺点">Pull 模式的缺点</h2>
 <p>当然采用 Pull 也会带来一些问题：</p>
 <ul>
 <li>如果监控对于实时要求很高的服务，这种系统拉取确实会导致问题，计量服务必须在拉取的间隔中间缓存事件，拉取的频率也要非常高才能接近推送模式的效果。</li>
 <li>当应用服务或监控目标的网络不可达「如 IoT 环境」，Pull 模式几乎不可能。这个时候就需要采取 pushgateway 的方式</li>
 </ul>
-<p>如果必需要使用 Push 模式，Prometheus 提供了 <a href="https://prometheus.io/docs/instrumenting/pushing/">Pushgateway</a>的方式，但实际上 pushgateway 和 prometheus 之间依然是 pull 模式。</p>
-<h2 id="总结">
-    <a href="#%e6%80%bb%e7%bb%93" class="anchor">
-        <svg class="icon" aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16">
-            <path fill-rule="evenodd"
-                d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z">
-            </path>
-        </svg>
-    </a>
-    总结
-</h2>
+<p>如果必需要使用 Push 模式，Prometheus 提供了 <a class="link" href="https://prometheus.io/docs/instrumenting/pushing/"  target="_blank" rel="noopener"
+    >Pushgateway</a>的方式，但实际上 pushgateway 和 prometheus 之间依然是 pull 模式。</p>
+<h2 id="总结">总结</h2>
 <p>Prometheus 官方并没有对选择 Pull 的方式进行过多的说明，但是显然，Prometheus 的整体设计和数据管理方式也决定了其必定采用 Pull 模式。</p>
-<h2 id="reference">
-    <a href="#reference" class="anchor">
-        <svg class="icon" aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16">
-            <path fill-rule="evenodd"
-                d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z">
-            </path>
-        </svg>
-    </a>
-    Reference
-</h2>
+<h2 id="reference">Reference</h2>
 <ul>
-<li><a href="https://prometheus.io/docs/introduction/faq/#why-do-you-pull-rather-than-push">FAQ | Prometheus</a></li>
-<li><a href="https://prometheus.io/blog/2016/07/23/pull-does-not-scale-or-does-it/">Pull doesn&rsquo;t scale - or does it? | Prometheus</a></li>
-<li><a href="https://prometheus.io/docs/instrumenting/pushing/">https://prometheus.io/docs/instrumenting/pushing/</a></li>
-<li><a href="https://twitter.com/_a_wing/status/1512451830814437385">https://twitter.com/_a_wing/status/1512451830814437385</a></li>
-<li><a href="https://twitter.com/_a_wing/status/1512451830814437385">https://twitter.com/_a_wing/status/1512451830814437385</a></li>
+<li><a class="link" href="https://prometheus.io/docs/introduction/faq/#why-do-you-pull-rather-than-push"  target="_blank" rel="noopener"
+    >https://prometheus.io/docs/introduction/faq/#why-do-you-pull-rather-than-push</a></li>
+<li><a class="link" href="https://prometheus.io/blog/2016/07/23/pull-does-not-scale-or-does-it/"  target="_blank" rel="noopener"
+    >https://prometheus.io/blog/2016/07/23/pull-does-not-scale-or-does-it/</a></li>
+<li><a class="link" href="https://prometheus.io/docs/instrumenting/pushing/"  target="_blank" rel="noopener"
+    >https://prometheus.io/docs/instrumenting/pushing/</a></li>
+<li><a class="link" href="https://twitter.com/_a_wing/status/1512451830814437385"  target="_blank" rel="noopener"
+    >https://twitter.com/_a_wing/status/1512451830814437385</a></li>
 </ul>
-<h4 id="转载申请">
-    <a href="#%e8%bd%ac%e8%bd%bd%e7%94%b3%e8%af%b7" class="anchor">
-        <svg class="icon" aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16">
-            <path fill-rule="evenodd"
-                d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z">
-            </path>
-        </svg>
-    </a>
-    转载申请
-</h4>
-<p>本作品采用<a href="http://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>进行许可，转载时请注明原文链接，图片在使用时请保留全部内容，可适当缩放并在引用处附上图片所在的文章链接。</p>
+<h4 id="转载申请">转载申请</h4>
+<p>本作品采用<a class="link" href="http://creativecommons.org/licenses/by/4.0/"  target="_blank" rel="noopener"
+    >知识共享署名 4.0 国际许可协议</a>进行许可，转载时请注明原文链接，图片在使用时请保留全部内容，可适当缩放并在引用处附上图片所在的文章链接。</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2022 Jett Deng
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.11.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
 
     </div>
-</div>
 
-<div class="container">
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
     
-    <nav class="flex container suggested">
-        
-        <a rel="prev" href="/post/my-campus-offer-record/" title="Previous post (older)">
-            <span>Previous</span>
-            我的校招总结
-            </a>
-        
-        
-        
-        <a rel="next" href="/post/pets-and-cattle/" title="Next post (newer)">
-            <span>Next</span>
-            宠物和牲畜带来的思考
-            </a> 
-        
-    </nav>
-    
-</div>
- 
-<div class="container">
-    
-</div>
 
-</main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
 
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
 
-        </main>
-        <footer class="footer flex">
-    <section class="container">
-        <nav class="footer-links">
-            
-            <a href="/index.xml">RSS</a>
-            
-        </nav>
-
-        
-    </section>
-    <script defer src="/ts/features.dd8e5b18a6dda91367e396fd8dc9b9f83a1993065f709a53e056e0f2e9096ea1.js" 
-    data-enable-footnotes="true"
-    ></script>
-</footer>
+        document.head.appendChild(customFont);
+    }());
+</script>
 
     </body>
 </html>
