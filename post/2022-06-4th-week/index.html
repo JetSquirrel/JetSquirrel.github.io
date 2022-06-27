@@ -6,16 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="theme-color" content="dark">
-    <title>为什么 Promethus 采用了 Pull 模式？ | 喷气松鼠</title>
+    <title>2022年6月第四周 | 喷气松鼠</title>
 
     
     
     
     <meta property="og:site_name" content="喷气松鼠" />
-    <meta property="og:title" content="为什么 Promethus 采用了 Pull 模式？ | 喷气松鼠"/>
-    <meta itemprop="name" content="为什么 Promethus 采用了 Pull 模式？ | 喷气松鼠" />
-    <meta name="twitter:title" content="为什么 Promethus 采用了 Pull 模式？ | 喷气松鼠" />
-    <meta name="application-name" content="为什么 Promethus 采用了 Pull 模式？ | 喷气松鼠" /><meta name="twitter:card" content="summary"/>
+    <meta property="og:title" content="2022年6月第四周 | 喷气松鼠"/>
+    <meta itemprop="name" content="2022年6月第四周 | 喷气松鼠" />
+    <meta name="twitter:title" content="2022年6月第四周 | 喷气松鼠" />
+    <meta name="application-name" content="2022年6月第四周 | 喷气松鼠" /><meta name="twitter:card" content="summary"/>
 
     <meta name="description" content="Jet Squirrel" />
     <meta name="twitter:description" content="Jet Squirrel"/>
@@ -26,8 +26,8 @@
 
 <meta property="og:type" content="article" />
 <meta property="article:publisher" content="Jet Deng" />
-<meta property="og:article:published_time" content=2022-05-19T12:02:44&#43;0800 />
-<meta property="article:published_time" content=2022-05-19T12:02:44&#43;0800 />
+<meta property="og:article:published_time" content=2022-06-27T08:18:29&#43;0800 />
+<meta property="article:published_time" content=2022-06-27T08:18:29&#43;0800 />
 
 
 
@@ -37,16 +37,16 @@
   {
     "@context": "http://schema.org",
     "@type": "Article",
-    "headline": "为什么 Promethus 采用了 Pull 模式？",
+    "headline": "2022年6月第四周",
     "author": {
       "@type": "Person",
       "name": "Jet Deng"
     },
-    "datePublished": "2022-05-19",
+    "datePublished": "2022-06-27",
     "description": "",
-    "wordCount":  107 ,
+    "wordCount":  111 ,
     "mainEntityOfPage": "True",
-    "dateModified": "2022-05-19",
+    "dateModified": "2022-06-27",
     "publisher": {
       "@type": "Organization",
       "name": "Jet Deng",
@@ -127,14 +127,14 @@
         <header class="article-header">
             <div class="thumb">
                 <div>
-                    <h1>为什么 Promethus 采用了 Pull 模式？</h1>
+                    <h1>2022年6月第四周</h1>
                     <div class="post-meta">
                         <div>
                             
                             
                               
                             
-                            By Jet Deng | <time>May 19, 2022</time>
+                            By Jet Deng | <time>June 27, 2022</time>
                             | 1 minutes
                         </div>
                         <div class="tags">
@@ -147,125 +147,152 @@
     </article>
 
     <div class="article-post">
-    <p>在计算机系统的监控中，采集指标通常有两种方式：</p>
+    <p>这是我的第一份周报，时间范围是 <code>2022-6-20</code> 到 <code>2022-6-26</code>，会记录工作 / 学习 / 生活上的事情。</p>
+<h2 id="工作--代码--计算机">
+    <a href="#%e5%b7%a5%e4%bd%9c--%e4%bb%a3%e7%a0%81--%e8%ae%a1%e7%ae%97%e6%9c%ba" class="anchor">
+        <svg class="icon" aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16">
+            <path fill-rule="evenodd"
+                d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z">
+            </path>
+        </svg>
+    </a>
+    💻工作 / 代码 / 计算机
+</h2>
+<h3 id="fluent-operator-的-fluentd-loki-插件开发">
+    <a href="#fluent-operator-%e7%9a%84-fluentd-loki-%e6%8f%92%e4%bb%b6%e5%bc%80%e5%8f%91" class="anchor">
+        <svg class="icon" aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16">
+            <path fill-rule="evenodd"
+                d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z">
+            </path>
+        </svg>
+    </a>
+    fluent-operator 的 Fluentd Loki 插件开发
+</h3>
+<p>这周我又接下了开源项目 <code>fluent-operator</code> 的 Fluentd Loki 插件开发 issue，本以为有了上次提交 OpenSearch 插件经验会完成的更加顺畅，今天上手后才发现还是有很多问题需要进行解决，这对我来说会是一个很大的挑战。</p>
+<h3 id="golang-代码规范">
+    <a href="#golang-%e4%bb%a3%e7%a0%81%e8%a7%84%e8%8c%83" class="anchor">
+        <svg class="icon" aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16">
+            <path fill-rule="evenodd"
+                d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z">
+            </path>
+        </svg>
+    </a>
+    Golang 代码规范
+</h3>
+<p>周五学习了 Golang 的代码规范，发现平时自己在写 Golang 的时候有些地方不符合规范，以后得多多留意。另外，我发现关注的开源项目 <code>fluent-operator</code> 和 <code>siyuan-note</code> 中，有些代码不符合 Golang 规范，以后可以在这些地方水一水 PR。</p>
+<h2 id="学习">
+    <a href="#%e5%ad%a6%e4%b9%a0" class="anchor">
+        <svg class="icon" aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16">
+            <path fill-rule="evenodd"
+                d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z">
+            </path>
+        </svg>
+    </a>
+    ✍️学习
+</h2>
+<h3 id="读书">
+    <a href="#%e8%af%bb%e4%b9%a6" class="anchor">
+        <svg class="icon" aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16">
+            <path fill-rule="evenodd"
+                d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z">
+            </path>
+        </svg>
+    </a>
+    读书
+</h3>
+<p>这周读了三本书：</p>
 <ul>
-<li><strong>Push</strong></li>
-<li><strong>Pull</strong>
-Push 是数据产生端由事件驱动，主动向采集端发送指标数据，与之相对应的 Pull 是由采集端定时拉取数据。</li>
+<li>Google SRE 运维解密：讲解 SRE 这个工作岗位的由来以及在 Google 中的实践经验，目前看到了第六章 「分布式系统的监控」</li>
+<li>教堂与集市：讲解开源文化，目前看到了第二章「教堂与集市」</li>
+<li>Build Your Second Brain：由于是全英文，目前只看了 Introduction，但是通过相关解读这本书的中文博客和视频学习到了「P.A.R.A」知识管理方法
+我的阅读软件采用了「思源笔记」，双链标注 PDF 的方式是真的好用，非常适合整理读书笔记</li>
 </ul>
-<p><img loading="lazy" 
-    src="http://blog-image-1306462451.cos.ap-nanjing.myqcloud.com/why-promethus-pull/pull-and-push.png" 
-    alt="pull-and-push" 
-     /></p>
-<p>作为目前云原生监控中扛把子的 Prometus 采集数据采用了 Pull 模式，虽然在官方文档 <a href="https://prometheus.io/docs/introduction/faq/#why-do-you-pull-rather-than-push">FAQ</a> 中给出了理由：</p>
+<h3 id="para">
+    <a href="#para" class="anchor">
+        <svg class="icon" aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16">
+            <path fill-rule="evenodd"
+                d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z">
+            </path>
+        </svg>
+    </a>
+    P.A.R.A
+</h3>
+<p>P.A.R.A 是 Tiago Forte 发明的项目管理方法，其中</p>
 <ul>
-<li>可以在笔记本上监控开发时产生的变更</li>
-<li>如果监控目标宕机了可以更容易被发现</li>
-<li>可以通过 web 浏览器手工访问监控目标并检查其健康状况</li>
+<li>项目（Project）：具有<strong>明确目标</strong>以及<strong>时间范围</strong>，是最小执行单位</li>
+<li>领域（Area）：<strong>长期</strong>需要关注的领域（带责任）</li>
+<li>资源（Resource）：感兴趣的事情（非责任）</li>
+<li>归档（Archive）：沉寂的内容，但也许对未来有用
+笔记工具采用的是「思源笔记」，目前已经将以前的笔记转化为 P.A.R.A 方式。</li>
 </ul>
-<p>但是这些不能说明 Pull 模式的优点，在前段时间在推特上看到了一个关于 Prometheus 采用 Pull 模式的<a href="https://twitter.com/_a_wing/status/1512451830814437385">Twitter讨论</a>，为此本文</p>
-<h2 id="prometheus-的设计理念">
-    <a href="#prometheus-%e7%9a%84%e8%ae%be%e8%ae%a1%e7%90%86%e5%bf%b5" class="anchor">
+<h2 id="生活">
+    <a href="#%e7%94%9f%e6%b4%bb" class="anchor">
         <svg class="icon" aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16">
             <path fill-rule="evenodd"
                 d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z">
             </path>
         </svg>
     </a>
-    Prometheus 的设计理念
+    🍚生活
 </h2>
-<p>Prometheus 的 slogan 是「metrics to  insight」，意思是它仅仅关心标准化地采集给定指标的当前状态，而不是导致这些指标的底层事件，所以其不是基于事件的监控系统。</p>
-<p>例如，计量服务不会发送关于每个 HTTP 请求的消息给 Prometheus 服务器，而是在内存中简单地累加这些请求。每秒可能会发生成百上千次这种累加而不会产生任何监控流量。Prometheus 然后每隔 15 或 30 秒简单地问一下这个服务实例当前状态的累积值而已。监控结果的传输量很小，拉取模式也不会产生问题。</p>
-<p>如果是基于事件的监控系统，需要在每一个事件「HTTP 请求、异常」发生时立即向监控服务器报告，监控服务器可以汇聚事件为指标或保存事件用于后续处理，例如ELK。</p>
-<h2 id="监控目标的配置更少">
-    <a href="#%e7%9b%91%e6%8e%a7%e7%9b%ae%e6%a0%87%e7%9a%84%e9%85%8d%e7%bd%ae%e6%9b%b4%e5%b0%91" class="anchor">
+<h3 id="开始运动">
+    <a href="#%e5%bc%80%e5%a7%8b%e8%bf%90%e5%8a%a8" class="anchor">
         <svg class="icon" aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16">
             <path fill-rule="evenodd"
                 d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z">
             </path>
         </svg>
     </a>
-    监控目标的配置更少
-</h2>
-<p>采用 Pull 模式，不用知道监控目标中的具体信息，也不用在监控目标不用维护指标推送的服务，这些工作都由数据采集端统一管理，而采用 Push 模式那么就需要更多的资源。</p>
-<p>因此，采用 Pull 模式的业务开发中，只需要保证自己服务的数据能够被采集到，采集出错或异常由采集端统一处理。这样对于监控目标的应用开发来说会更简单。</p>
-<p>Push 模式会要求更多的配置，采集端要知道监控目标，监控目标还要知道数据采集服务器，同时还需要在应用端编写错误处理、连接建立等代码，这大大增加了监控目标的负担。</p>
-<h2 id="掌握主动权">
-    <a href="#%e6%8e%8c%e6%8f%a1%e4%b8%bb%e5%8a%a8%e6%9d%83" class="anchor">
-        <svg class="icon" aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16">
-            <path fill-rule="evenodd"
-                d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z">
-            </path>
-        </svg>
-    </a>
-    掌握主动权
-</h2>
-<p>无论哪种模式，如果发送给时序数据库的数据量超过它的处理能力都会导致服务器宕机。但是存在的区别是， Push 模式通常会由业务开发人员在业务逻辑中编写，由于其水平参差不齐，代码编写存在着问题将会造成对监控服务造成巨大的负载；而监控团队通常就一个 Team，通常是对监控系统的熟悉程度更高，代码质量相对可控，因此 Pull 模式能够将这一部分风险降低。</p>
-<h2 id="更好控制数据粒度">
-    <a href="#%e6%9b%b4%e5%a5%bd%e6%8e%a7%e5%88%b6%e6%95%b0%e6%8d%ae%e7%b2%92%e5%ba%a6" class="anchor">
-        <svg class="icon" aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16">
-            <path fill-rule="evenodd"
-                d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z">
-            </path>
-        </svg>
-    </a>
-    更好控制数据粒度
-</h2>
-<p>pull 模式能够有更好的控制数据的粒度，不管是画图，还是做算法分析，数据预处理的过程都会比较简单</p>
-<h2 id="pull-模式的缺点">
-    <a href="#pull-%e6%a8%a1%e5%bc%8f%e7%9a%84%e7%bc%ba%e7%82%b9" class="anchor">
-        <svg class="icon" aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16">
-            <path fill-rule="evenodd"
-                d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z">
-            </path>
-        </svg>
-    </a>
-    Pull 模式的缺点
-</h2>
-<p>当然采用 Pull 也会带来一些问题：</p>
+    开始运动
+</h3>
+<p>这周开始在家运动，主要是跟着 B 站上的视频训练，主要运动内容是：</p>
 <ul>
-<li>如果监控对于实时要求很高的服务，这种系统拉取确实会导致问题，计量服务必须在拉取的间隔中间缓存事件，拉取的频率也要非常高才能接近推送模式的效果。</li>
-<li>当应用服务或监控目标的网络不可达，例如如 IoT 环境，Pull 模式几乎不可能。这个时候就需要采取 pushgateway 的方式</li>
+<li>卡波耶拉基础</li>
+<li>核心力量训练
+以前很少运动，工作后的保持良好的运动习惯。「每天运动半小时，健康工作五十年」</li>
 </ul>
-<p>如果必需要使用 Push 模式，Prometheus 提供了 <a href="https://prometheus.io/docs/instrumenting/pushing/">Pushgateway</a>的方式，但实际上 pushgateway 和 prometheus 之间依然是 pull 模式。</p>
-<h2 id="总结">
-    <a href="#%e6%80%bb%e7%bb%93" class="anchor">
+<h3 id="离开家--到达深圳">
+    <a href="#%e7%a6%bb%e5%bc%80%e5%ae%b6--%e5%88%b0%e8%be%be%e6%b7%b1%e5%9c%b3" class="anchor">
         <svg class="icon" aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16">
             <path fill-rule="evenodd"
                 d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z">
             </path>
         </svg>
     </a>
-    总结
-</h2>
-<p>Prometheus 官方并没有对选择 Pull 的方式的原理进行详细说明，但是显然，Prometheus的设计理念就决定了其必定采用 Pull 的模式，这奠定了相比于Zabbix、 Nagios更加的易用。</p>
-<h2 id="reference">
-    <a href="#reference" class="anchor">
+    离开家 / 到达深圳
+</h3>
+<p>由于工作原因，我离开成都到了深圳。到外地工作打乱了我最初的安排，对于离开离开小秋和爸妈也非常不舍，但这是我综合各方面后最好的选择，
+到深圳后，这几天一直在看房，今天终于定下来了。这边防疫政策严格，每天都得捅喉咙做核酸，保证有24小时核酸码。另外，果然如网上所属，有着深圳有好多湘菜馆、隆江猪脚饭。</p>
+<h3 id="入职鹅厂--生日">
+    <a href="#%e5%85%a5%e8%81%8c%e9%b9%85%e5%8e%82--%e7%94%9f%e6%97%a5" class="anchor">
         <svg class="icon" aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16">
             <path fill-rule="evenodd"
                 d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z">
             </path>
         </svg>
     </a>
-    Reference
-</h2>
-<ul>
-<li><a href="https://prometheus.io/docs/introduction/faq/#why-do-you-pull-rather-than-push">https://prometheus.io/docs/introduction/faq/#why-do-you-pull-rather-than-push</a></li>
-<li><a href="https://prometheus.io/blog/2016/07/23/pull-does-not-scale-or-does-it/">https://prometheus.io/blog/2016/07/23/pull-does-not-scale-or-does-it/</a></li>
-<li><a href="https://prometheus.io/docs/instrumenting/pushing/">https://prometheus.io/docs/instrumenting/pushing/</a></li>
-<li><a href="https://twitter.com/_a_wing/status/1512451830814437385">https://twitter.com/_a_wing/status/1512451830814437385</a></li>
-</ul>
-<h4 id="转载申请">
-    <a href="#%e8%bd%ac%e8%bd%bd%e7%94%b3%e8%af%b7" class="anchor">
+    入职鹅厂 / 生日
+</h3>
+<p>这周五正式入职鹅厂🐧，同时，入职这天也刚好是我的生日。选择入职日期并没有没有刻意安排，事后才发觉。这我而言也是一个非常重要的「仪式」吧，即意味着我长大了一岁，也表示我身上的责任更多了。
+刚入职的工作主要是安装办公环境、看文档、熟悉产品，新同事非常 Nice，晚饭过后同事给我生日，还吃到 mentor 订的生日蛋糕，非常感谢大家。</p>
+<h3 id="mac-真香">
+    <a href="#mac-%e7%9c%9f%e9%a6%99" class="anchor">
         <svg class="icon" aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16">
             <path fill-rule="evenodd"
                 d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z">
             </path>
         </svg>
     </a>
-    转载申请
-</h4>
-<p>本作品采用<a href="http://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>进行许可，转载时请注明原文链接，图片在使用时请保留全部内容，可适当缩放并在引用处附上图片所在的文章链接。</p>
+    Mac 真香
+</h3>
+<p>用上了公司发的 Mac，苹果的用户体验果然名不虚传，用来开发和写文档非常舒服，由于是第一次使用还在适应中。
+上一台电脑是 Surface，我用它上面写论文、写笔记、看视频、绘图、玩游戏、跑深度强化学习，终于，现在它不用再承受它不该承受的负担了。</p>
+<blockquote>
+<p>Author: JetSquirrel
+LastMod: 2022-06-27
+License CC BY-NC-ND 4.0
+本文格式参考了 <a href="strrl.dev">STRRL</a></p>
+</blockquote>
 
     </div>
 </div>
@@ -274,17 +301,12 @@ Push 是数据产生端由事件驱动，主动向采集端发送指标数据，
     
     <nav class="flex container suggested">
         
-        <a rel="prev" href="/post/my-campus-offer-record/" title="Previous post (older)">
+        <a rel="prev" href="/post/k8s-source-code-informer-deltafifo/" title="Previous post (older)">
             <span>Previous</span>
-            我的校招总结
+            Informer Deltafifo 源码解读
             </a>
         
         
-        
-        <a rel="next" href="/post/pets-and-cattle/" title="Next post (newer)">
-            <span>Next</span>
-            宠物和牲畜带来的思考
-            </a> 
         
     </nav>
     

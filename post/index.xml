@@ -6,7 +6,21 @@
     <description>Recent content in Posts on 喷气松鼠</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 19 May 2022 22:16:06 +0800</lastBuildDate><atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 27 Jun 2022 08:18:29 +0800</lastBuildDate><atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>2022年6月第四周</title>
+      <link>/post/2022-06-4th-week/</link>
+      <pubDate>Mon, 27 Jun 2022 08:18:29 +0800</pubDate>
+      
+      <guid>/post/2022-06-4th-week/</guid>
+      <description>这是我的第一份周报，时间范围是 2022-6-20 到 2022-6-26，会记录工作 / 学习 / 生活上的事情。
+💻工作 / 代码 / 计算机fluent-operator 的 Fluentd Loki 插件开发这周我又接下了开源项目 fluent-operator 的 Fluentd Loki 插件开发 issue，本以为有了上次提交 OpenSearch 插件经验会完成的更加顺畅，今天上手后才发现还是有很多问题需要进行解决，这对我来说会是一个很大的挑战。
+Golang 代码规范周五学习了 Golang 的代码规范，发现平时自己在写 Golang 的时候有些地方不符合规范，以后得多多留意。另外，我发现关注的开源项目 fluent-operator 和 siyuan-note 中，有些代码不符合 Golang 规范，以后可以在这些地方水一水 PR。
+✍️学习读书这周读了三本书：
+Google SRE 运维解密：讲解 SRE 这个工作岗位的由来以及在 Google 中的实践经验，目前看到了第六章 「分布式系统的监控」 教堂与集市：讲解开源文化，目前看到了第二章「教堂与集市」 Build Your Second Brain：由于是全英文，目前只看了 Introduction，但是通过相关解读这本书的中文博客和视频学习到了「P.A.R.A」知识管理方法 我的阅读软件采用了「思源笔记」，双链标注 PDF 的方式是真的好用，非常适合整理读书笔记 P.A.R.AP.A.R.A 是 Tiago Forte 发明的项目管理方法，其中
+项目（Project）：具有明确目标以及时间范围，是最小执行单位 领域（Area）：长期需要关注的领域（带责任） 资源（Resource）：感兴趣的事情（非责任） 归档（Archive）：沉寂的内容，但也许对未来有用 笔记工具采用的是「思源笔记」，目前已经将以前的笔记转化为 P.</description>
+    </item>
+    
     <item>
       <title>Informer Deltafifo 源码解读</title>
       <link>/post/k8s-source-code-informer-deltafifo/</link>
@@ -19,22 +33,51 @@ DeltaFIFO的结构定义的源代码如下：
     </item>
     
     <item>
+      <title>宠物和牲畜带来的思考</title>
+      <link>/post/pets-and-cattle/</link>
+      <pubDate>Thu, 19 May 2022 12:03:55 +0800</pubDate>
+      
+      <guid>/post/pets-and-cattle/</guid>
+      <description>前言在云计算领域中，对于有服务器管理模式有一个生动的比喻来表示：宠物（Pets）和牲畜（Cattle）。
+宠物。我们拥有一只宠物，如猫狗，为其取名字，精心饲养并在宠物生病为其治疗，保障它的健康，如果宠物死去后会伤心。 牲畜。在农场中饲养的奶牛、肉猪，通常会有很多只，我们不会为其取名字，在它死去后也不会伤心，只会用另一只来取代它。 在云计算领域中，「宠物」通常代指的不可或缺的系统或者是独特的系统。这些系统通常由运维人员手动构建和维护；而「牲畜」通常是指通过自动化工具而构建的服务器集群，在一开始就考虑到了故障，没有哪一个服务器是不可替代的。
+K8sK8s中的Deployment的设计就是通过对多个Pod
+K8s中引入了Pets Set「现改名为StatufulSet」
+学习与教育工作You are not machines，You are not cattle，You are men.
+Charlie Chaplin, “The Great Dictator”
+https://mp.weixin.qq.com/s/BIjyP3T9NBhm7vp6CG4G1A
+https://xie.infoq.cn/article/dcc6117de96edc5239a44c3aa
+http://cloudscaling.com/blog/cloud-computing/the-history-of-pets-vs-cattle/
+https://iamondemand.com/blog/devops-concepts-pets-vs-cattle/
+https://www.hava.io/blog/cattle-vs-pets-devops-explained</description>
+    </item>
+    
+    <item>
       <title>为什么 Promethus 采用了 Pull 模式？</title>
       <link>/post/why-promethus-using-pull/</link>
       <pubDate>Thu, 19 May 2022 12:02:44 +0800</pubDate>
       
       <guid>/post/why-promethus-using-pull/</guid>
-      <description>在数据监控领域，数据采集端获取到监控目标的数据通常有 Push 和 Pull 两种方案，其中 Push 是由数据产生端根据事件驱动主动向采集端发送数据，而 Pull 是由采集端定时拉取数据。
-作为目前云原生监控中扛把子的 Prometus 采集数据采用了 Pull 模式，虽然在官方文档 FAQ 中给出了理由：
-可以在笔记本上监控开发时产生的变更 如果监控目标宕机了可以更容易被发现 可以通过 web 浏览器手工访问监控目标并检查其健康状况 但是这些不能说明 Pull 模式的优点，在前段时间在推特上看到了一个关于 Prometheus 采用 Pull 的Twitter讨论，经过结合官方博客的内容我对其进行了总结
-Prometheus 的设计理念Prometheus 的 slogan是「From metrics to insight」，意思是它仅仅关心标准化地采集给定指标的当前状态，而不是导致这些指标的底层事件，所以其不是基于事件的监控系统。
+      <description>在计算机系统的监控中，采集指标通常有两种方式：
+Push Pull Push 是数据产生端由事件驱动，主动向采集端发送指标数据，与之相对应的 Pull 是由采集端定时拉取数据。 作为目前云原生监控中扛把子的 Prometus 采集数据采用了 Pull 模式，虽然在官方文档 FAQ 中给出了理由：
+可以在笔记本上监控开发时产生的变更 如果监控目标宕机了可以更容易被发现 可以通过 web 浏览器手工访问监控目标并检查其健康状况 但是这些不能说明 Pull 模式的优点，在前段时间在推特上看到了一个关于 Prometheus 采用 Pull 模式的Twitter讨论，为此本文
+Prometheus 的设计理念Prometheus 的 slogan 是「metrics to insight」，意思是它仅仅关心标准化地采集给定指标的当前状态，而不是导致这些指标的底层事件，所以其不是基于事件的监控系统。
 例如，计量服务不会发送关于每个 HTTP 请求的消息给 Prometheus 服务器，而是在内存中简单地累加这些请求。每秒可能会发生成百上千次这种累加而不会产生任何监控流量。Prometheus 然后每隔 15 或 30 秒简单地问一下这个服务实例当前状态的累积值而已。监控结果的传输量很小，拉取模式也不会产生问题。
-如果是基于事件的监控系统，需要在每一个事件「HTTP 请求、异常」发生时立即向监控服务器报告，监控服务器可以汇聚事件为指标或保存事件用于后续处理，例如ELK 。
+如果是基于事件的监控系统，需要在每一个事件「HTTP 请求、异常」发生时立即向监控服务器报告，监控服务器可以汇聚事件为指标或保存事件用于后续处理，例如ELK。
 监控目标的配置更少采用 Pull 模式，不用知道监控目标中的具体信息，也不用在监控目标不用维护指标推送的服务，这些工作都由数据采集端统一管理，而采用 Push 模式那么就需要更多的资源。
 因此，采用 Pull 模式的业务开发中，只需要保证自己服务的数据能够被采集到，采集出错或异常由采集端统一处理。这样对于监控目标的应用开发来说会更简单。
 Push 模式会要求更多的配置，采集端要知道监控目标，监控目标还要知道数据采集服务器，同时还需要在应用端编写错误处理、连接建立等代码，这大大增加了监控目标的负担。
 掌握主动权无论哪种模式，如果发送给时序数据库的数据量超过它的处理能力都会导致服务器宕机。但是存在的区别是， Push 模式通常会由业务开发人员在业务逻辑中编写，由于其水平参差不齐，代码编写存在着问题将会造成对监控服务造成巨大的负载；而监控团队通常就一个 Team，通常是对监控系统的熟悉程度更高，代码质量相对可控，因此 Pull 模式能够将这一部分风险降低。
-更好控制数据粒度pull 模式有更好的控制粒度，能收敛到一个中心点方便治理</description>
+更好控制数据粒度pull 模式能够有更好的控制数据的粒度，不管是画图，还是做算法分析，数据预处理的过程都会比较简单
+Pull 模式的缺点当然采用 Pull 也会带来一些问题：</description>
+    </item>
+    
+    <item>
+      <title>我的校招总结</title>
+      <link>/post/my-campus-offer-record/</link>
+      <pubDate>Tue, 26 Apr 2022 15:30:27 +0800</pubDate>
+      
+      <guid>/post/my-campus-offer-record/</guid>
+      <description>前言时间线收获Offer</description>
     </item>
     
   </channel>
