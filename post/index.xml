@@ -33,25 +33,6 @@ DeltaFIFO的结构定义的源代码如下：
     </item>
     
     <item>
-      <title>宠物和牲畜带来的思考</title>
-      <link>/post/pets-and-cattle/</link>
-      <pubDate>Thu, 19 May 2022 12:03:55 +0800</pubDate>
-      
-      <guid>/post/pets-and-cattle/</guid>
-      <description>前言在云计算领域中，对于有服务器管理模式有一个生动的比喻来表示：宠物（Pets）和牲畜（Cattle）。
-宠物。我们拥有一只宠物，如猫狗，为其取名字，精心饲养并在宠物生病为其治疗，保障它的健康，如果宠物死去后会伤心。 牲畜。在农场中饲养的奶牛、肉猪，通常会有很多只，我们不会为其取名字，在它死去后也不会伤心，只会用另一只来取代它。 在云计算领域中，「宠物」通常代指的不可或缺的系统或者是独特的系统。这些系统通常由运维人员手动构建和维护；而「牲畜」通常是指通过自动化工具而构建的服务器集群，在一开始就考虑到了故障，没有哪一个服务器是不可替代的。
-K8sK8s中的Deployment的设计就是通过对多个Pod
-K8s中引入了Pets Set「现改名为StatufulSet」
-学习与教育工作You are not machines，You are not cattle，You are men.
-Charlie Chaplin, “The Great Dictator”
-https://mp.weixin.qq.com/s/BIjyP3T9NBhm7vp6CG4G1A
-https://xie.infoq.cn/article/dcc6117de96edc5239a44c3aa
-http://cloudscaling.com/blog/cloud-computing/the-history-of-pets-vs-cattle/
-https://iamondemand.com/blog/devops-concepts-pets-vs-cattle/
-https://www.hava.io/blog/cattle-vs-pets-devops-explained</description>
-    </item>
-    
-    <item>
       <title>为什么 Promethus 采用了 Pull 模式？</title>
       <link>/post/why-promethus-using-pull/</link>
       <pubDate>Thu, 19 May 2022 12:02:44 +0800</pubDate>
@@ -69,15 +50,6 @@ Push 模式会要求更多的配置，采集端要知道监控目标，监控目
 掌握主动权无论哪种模式，如果发送给时序数据库的数据量超过它的处理能力都会导致服务器宕机。但是存在的区别是， Push 模式通常会由业务开发人员在业务逻辑中编写，由于其水平参差不齐，代码编写存在着问题将会造成对监控服务造成巨大的负载；而监控团队通常就一个 Team，通常是对监控系统的熟悉程度更高，代码质量相对可控，因此 Pull 模式能够将这一部分风险降低。
 更好控制数据粒度pull 模式能够有更好的控制数据的粒度，不管是画图，还是做算法分析，数据预处理的过程都会比较简单
 Pull 模式的缺点当然采用 Pull 也会带来一些问题：</description>
-    </item>
-    
-    <item>
-      <title>我的校招总结</title>
-      <link>/post/my-campus-offer-record/</link>
-      <pubDate>Tue, 26 Apr 2022 15:30:27 +0800</pubDate>
-      
-      <guid>/post/my-campus-offer-record/</guid>
-      <description>前言时间线收获Offer</description>
     </item>
     
   </channel>
