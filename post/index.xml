@@ -6,7 +6,21 @@
     <description>Recent content in Posts on 喷气松鼠</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 27 Jun 2022 08:18:29 +0800</lastBuildDate><atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 03 Jul 2022 21:18:29 +0800</lastBuildDate><atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>2022年7月第一周 | 步入正轨</title>
+      <link>/post/2022-07-1st-week/</link>
+      <pubDate>Sun, 03 Jul 2022 21:18:29 +0800</pubDate>
+      
+      <guid>/post/2022-07-1st-week/</guid>
+      <description>这是我的七月份第一周的周报，时间范围是 2022-06-27 到 2022-07-03，主要记录了工作 / 学习 / 生活上的事情。
+💻 工作 / 代码 / 计算机了解业务 &amp;amp; 接手项目在公司的工作上，这周完成新人培训在线课程的学习，并且开始了解业务相关的资料和接触项目。
+开源项目没有花太多时间之前接手的 fluent-operator，这周也没有花太多时间去做。周内因为刚刚搬家还有很多事情要做，周末就在家躺尸，完全不想干活。之后还是的得调整自己时间安排，合理安排一定的时间在开源项目上。
+✍️ 学习读书这周没怎么看书，只读了一本书的 Introduction 部分。
+《性能之巅》（ Systems Performace ） ：这本书是衡量系统性能的百科收藏，作者是一位经验丰富的性能工程师，著有《性能之巅》、《BPF 之巅》等可观测领域的书籍 以前收集很多电子书籍，但是都存在硬盘里没有阅读，这周进行了整理，挑出了一些以后需要学习内容：
+🔭 可观测性 《性能之巅》（ Systems Perfemance ） 《BPF 之巅》（ BPF Performance Tools ） Logging in Action ☁️ 云原生 Kubernets Security an Observability Networking and Kuberenets Kuberentes Operator Kubernentes Patterns Container Security 🤔 其它 《大教堂与集市》 《SRE：Google 运维解密》 对应的 PDF 已经上传到网盘，点击文末「链接」获取。</description>
+    </item>
+    
     <item>
       <title>2022年6月第四周</title>
       <link>/post/2022-06-4th-week/</link>
