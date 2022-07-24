@@ -6,7 +6,21 @@
     <description>Recent content in Posts on 喷气松鼠</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 03 Jul 2022 21:18:29 +0800</lastBuildDate><atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 25 Jul 2022 00:32:31 +0800</lastBuildDate><atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>2022年7月第三周 | OKR &amp; 购置物件</title>
+      <link>/post/2022-07-3rd-week/</link>
+      <pubDate>Mon, 25 Jul 2022 00:32:31 +0800</pubDate>
+      
+      <guid>/post/2022-07-3rd-week/</guid>
+      <description>这是我的七月份第二周的个人周报，时间范围是 2022-07-18 到 2022-07-24，主要记录了工作 / 学习 / 生活上的事情。
+鸽了一周上周鸽了一次周报，其实上周末有写周报，只是内容涉及到公司封培和个人的一些事情，所以没有发布。
+工作 / 代码 / 计算机工作 OKR &amp;amp; RoadMap 制定下半年工作的「OKR」和 「RoadMap」 在这周制定下来，这决定了我下半年工作上大致方向。有一些工作是以前有所了解，但大多数对我而言还是挺有挑战性。 同时，我也在思考如何胜任这一份工作，胜任做为一个 SRE ，无论是「硬技能」还是「软技能」都有很多地方需要去学习。
+个人 OKR除了工作上的 OKR，我也给自己制定了一份 OKR： O1：自我提升
+KR1: 每周运动健身不少于两次（30 min） KR2: 读完 Google SRE 系列书 KR3: 阅读开源项目的源码每周累计时长不少于「2H」 O2：个人影响力输出
+KR1：BiliBili 的粉丝达到 「1000」（目前 243） KR2: 输出高质量文章「3」篇 KR3：参与开源项目，提交 PR 不少于「5 个」 获得了 KubeSphere 的 Contributor 证书之前给 Fluent-Opreator 提交了一个 PR，这周 KS 社区为 Contributor 制定了证书，其中也包括了我。 说来惭愧，当时只提交了一个非常简单的插件，而且还是在 wenchajun 的帮助下完成。后续也有接 Issue，不过由于工作后没有时间和精力参与，导致一直没能完成承接的任务，幸好这个 Issue 被其他的 Contributor 完成了了。</description>
+    </item>
+    
     <item>
       <title>2022年7月第一周 | 步入正轨</title>
       <link>/post/2022-07-1st-week/</link>
