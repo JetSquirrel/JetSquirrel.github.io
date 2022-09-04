@@ -5,7 +5,174 @@
     <description>Recent content on 喷气松鼠</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 08 Aug 2022 09:22:00 +0800</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 04 Sep 2022 21:58:40 +0800</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+    <title>2022年第35周</title>
+    <link>/post/2022-35th-weekly/</link>
+    <pubDate>Sun, 04 Sep 2022 21:58:40 +0800</pubDate>
+    
+    <guid>/post/2022-35th-weekly/</guid>
+    <description>
+        &lt;h2 id=&#34;前言&#34;&gt;
+    &lt;a href=&#34;#%e5%89%8d%e8%a8%80&#34; class=&#34;anchor&#34;&gt;
+        &lt;svg class=&#34;icon&#34; aria-hidden=&#34;true&#34; focusable=&#34;false&#34; height=&#34;16&#34; version=&#34;1.1&#34; viewBox=&#34;0 0 16 16&#34; width=&#34;16&#34;&gt;
+            &lt;path fill-rule=&#34;evenodd&#34;
+                d=&#34;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&#34;&gt;
+            &lt;/path&gt;
+        &lt;/svg&gt;
+    &lt;/a&gt;
+    前言
+&lt;/h2&gt;
+&lt;p&gt;周报已经鸽了好几周，感觉自己没有时间和尽力去写，这周看了几个博主的周报深受启发，于是重新开始写。&lt;/p&gt;
+&lt;h2 id=&#34;关注了什么&#34;&gt;
+    &lt;a href=&#34;#%e5%85%b3%e6%b3%a8%e4%ba%86%e4%bb%80%e4%b9%88&#34; class=&#34;anchor&#34;&gt;
+        &lt;svg class=&#34;icon&#34; aria-hidden=&#34;true&#34; focusable=&#34;false&#34; height=&#34;16&#34; version=&#34;1.1&#34; viewBox=&#34;0 0 16 16&#34; width=&#34;16&#34;&gt;
+            &lt;path fill-rule=&#34;evenodd&#34;
+                d=&#34;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&#34;&gt;
+            &lt;/path&gt;
+        &lt;/svg&gt;
+    &lt;/a&gt;
+    关注了什么
+&lt;/h2&gt;
+&lt;h3 id=&#34;博客&#34;&gt;
+    &lt;a href=&#34;#%e5%8d%9a%e5%ae%a2&#34; class=&#34;anchor&#34;&gt;
+        &lt;svg class=&#34;icon&#34; aria-hidden=&#34;true&#34; focusable=&#34;false&#34; height=&#34;16&#34; version=&#34;1.1&#34; viewBox=&#34;0 0 16 16&#34; width=&#34;16&#34;&gt;
+            &lt;path fill-rule=&#34;evenodd&#34;
+                d=&#34;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&#34;&gt;
+            &lt;/path&gt;
+        &lt;/svg&gt;
+    &lt;/a&gt;
+    博客
+&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://wiki.eryajf.net/&#34;&gt;二丫讲梵&lt;/a&gt; ：分享了很多运维知识，可谓是一个百宝箱；该博主每周都有分享自己的学习周报，很是受用&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://blog.liugezhou.online/&#34;&gt;六个周&lt;/a&gt;：周报博主，每周的周报质量很高，是我学习的目标&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.junmajinlong.com/&#34;&gt;骏马金龙&lt;/a&gt;：主要是分享了一些运维工具教程。博主由于不是计算机专业科班出身，甚至作为一个外行人学习计算机的艰辛之处，所以写的教程非常详细易懂&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://sun-iot.gitee.io/&#34;&gt;南风意未起&lt;/a&gt;：分享了一些监控领域的工具和源码阅读笔记&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;视频&#34;&gt;
+    &lt;a href=&#34;#%e8%a7%86%e9%a2%91&#34; class=&#34;anchor&#34;&gt;
+        &lt;svg class=&#34;icon&#34; aria-hidden=&#34;true&#34; focusable=&#34;false&#34; height=&#34;16&#34; version=&#34;1.1&#34; viewBox=&#34;0 0 16 16&#34; width=&#34;16&#34;&gt;
+            &lt;path fill-rule=&#34;evenodd&#34;
+                d=&#34;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&#34;&gt;
+            &lt;/path&gt;
+        &lt;/svg&gt;
+    &lt;/a&gt;
+    视频
+&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.bilibili.com/video/BV1sB4y1G7zm&#34;&gt;总是胡思乱想停不下来？10分钟讲清精神内耗的本质，告别过度思考&lt;/a&gt;：Up主分享了自己受到「精神内耗」折磨的尽力和自己如何去摆脱内心的另一个「我」。我自己身上也有这个问题，总是在自己进行内耗，这个视频对我很是启发。&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.libvio.me/play/714242-3-7.html&#34;&gt;异世界归来舅舅 第七集&lt;/a&gt;：在追的一个番，挺有意思&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;时局&#34;&gt;
+    &lt;a href=&#34;#%e6%97%b6%e5%b1%80&#34; class=&#34;anchor&#34;&gt;
+        &lt;svg class=&#34;icon&#34; aria-hidden=&#34;true&#34; focusable=&#34;false&#34; height=&#34;16&#34; version=&#34;1.1&#34; viewBox=&#34;0 0 16 16&#34; width=&#34;16&#34;&gt;
+            &lt;path fill-rule=&#34;evenodd&#34;
+                d=&#34;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&#34;&gt;
+            &lt;/path&gt;
+        &lt;/svg&gt;
+    &lt;/a&gt;
+    时局
+&lt;/h3&gt;
+&lt;h4 id=&#34;成都核酸系统崩溃&#34;&gt;
+    &lt;a href=&#34;#%e6%88%90%e9%83%bd%e6%a0%b8%e9%85%b8%e7%b3%bb%e7%bb%9f%e5%b4%a9%e6%ba%83&#34; class=&#34;anchor&#34;&gt;
+        &lt;svg class=&#34;icon&#34; aria-hidden=&#34;true&#34; focusable=&#34;false&#34; height=&#34;16&#34; version=&#34;1.1&#34; viewBox=&#34;0 0 16 16&#34; width=&#34;16&#34;&gt;
+            &lt;path fill-rule=&#34;evenodd&#34;
+                d=&#34;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&#34;&gt;
+            &lt;/path&gt;
+        &lt;/svg&gt;
+    &lt;/a&gt;
+    成都核酸系统崩溃
+&lt;/h4&gt;
+&lt;p&gt;由于成都最近疫情比较严重，所以也要进行全员核酸，但是不幸的是核酸系统被打崩了。作为一个有着 2000 万人口的城市，受到的影响面非常的大，大家冒雨排队几小时，结果被告知做不了核酸，而排队的过程中也增加了被感染的风险。&lt;/p&gt;
+&lt;p&gt;原因是由于东软在9月2日新上了一个核酸检测系统，据传他们用了MySQL单表来存几亿条数据，导致性能严重不足。网上传了很多医护人员举着手机找信号和核酸漫长排队人群的照片，很是令人心酸。&lt;/p&gt;
+&lt;p&gt;我的工作就是作为保障软件系统的稳定性 SRE，深知软件系统稳定的重要性。东软却如此儿戏般的对待影响到千万民众生活的核酸系统，而且这已经是东软第三次发生这样的大面积系统崩溃事件。&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; 
+    src=&#34;https://blog-image-1306462451.cos.ap-nanjing.myqcloud.com/weekly/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20220904231031.jpg&#34; 
+    alt=&#34;&#34; 
+     /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; 
+    src=&#34;https://blog-image-1306462451.cos.ap-nanjing.myqcloud.com/weekly/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20220904231115.jpg&#34; 
+    alt=&#34;&#34; 
+     /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; 
+    src=&#34;https://blog-image-1306462451.cos.ap-nanjing.myqcloud.com/weekly/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20220904231108.jpg&#34; 
+    alt=&#34;&#34; 
+     /&gt;&lt;/p&gt;
+&lt;h2 id=&#34;生活&#34;&gt;
+    &lt;a href=&#34;#%e7%94%9f%e6%b4%bb&#34; class=&#34;anchor&#34;&gt;
+        &lt;svg class=&#34;icon&#34; aria-hidden=&#34;true&#34; focusable=&#34;false&#34; height=&#34;16&#34; version=&#34;1.1&#34; viewBox=&#34;0 0 16 16&#34; width=&#34;16&#34;&gt;
+            &lt;path fill-rule=&#34;evenodd&#34;
+                d=&#34;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&#34;&gt;
+            &lt;/path&gt;
+        &lt;/svg&gt;
+    &lt;/a&gt;
+    生活
+&lt;/h2&gt;
+&lt;h3 id=&#34;吃了什么&#34;&gt;
+    &lt;a href=&#34;#%e5%90%83%e4%ba%86%e4%bb%80%e4%b9%88&#34; class=&#34;anchor&#34;&gt;
+        &lt;svg class=&#34;icon&#34; aria-hidden=&#34;true&#34; focusable=&#34;false&#34; height=&#34;16&#34; version=&#34;1.1&#34; viewBox=&#34;0 0 16 16&#34; width=&#34;16&#34;&gt;
+            &lt;path fill-rule=&#34;evenodd&#34;
+                d=&#34;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&#34;&gt;
+            &lt;/path&gt;
+        &lt;/svg&gt;
+    &lt;/a&gt;
+    吃了什么
+&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;椒盐排骨&lt;/li&gt;
+&lt;li&gt;玉米排骨汤&lt;/li&gt;
+&lt;li&gt;地三鲜&amp;amp;干锅鸡&lt;/li&gt;
+&lt;li&gt;长沙臭豆腐&lt;/li&gt;
+&lt;li&gt;东北饺子&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;静默在家的周末&#34;&gt;
+    &lt;a href=&#34;#%e9%9d%99%e9%bb%98%e5%9c%a8%e5%ae%b6%e7%9a%84%e5%91%a8%e6%9c%ab&#34; class=&#34;anchor&#34;&gt;
+        &lt;svg class=&#34;icon&#34; aria-hidden=&#34;true&#34; focusable=&#34;false&#34; height=&#34;16&#34; version=&#34;1.1&#34; viewBox=&#34;0 0 16 16&#34; width=&#34;16&#34;&gt;
+            &lt;path fill-rule=&#34;evenodd&#34;
+                d=&#34;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&#34;&gt;
+            &lt;/path&gt;
+        &lt;/svg&gt;
+    &lt;/a&gt;
+    静默在家的周末
+&lt;/h3&gt;
+&lt;p&gt;深圳的疫情政策就是周一至周五上班，周末封两天。幸好小区里面超市、饭店都有，就是整个周末都在家都没有机会出去走走，令人不爽的一点就是感觉什么都没有做马上就要到周一啦。&lt;/p&gt;
+&lt;h2 id=&#34;学习编程&#34;&gt;
+    &lt;a href=&#34;#%e5%ad%a6%e4%b9%a0%e7%bc%96%e7%a8%8b&#34; class=&#34;anchor&#34;&gt;
+        &lt;svg class=&#34;icon&#34; aria-hidden=&#34;true&#34; focusable=&#34;false&#34; height=&#34;16&#34; version=&#34;1.1&#34; viewBox=&#34;0 0 16 16&#34; width=&#34;16&#34;&gt;
+            &lt;path fill-rule=&#34;evenodd&#34;
+                d=&#34;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&#34;&gt;
+            &lt;/path&gt;
+        &lt;/svg&gt;
+    &lt;/a&gt;
+    学习&amp;amp;编程
+&lt;/h2&gt;
+&lt;h3 id=&#34;买书&#34;&gt;
+    &lt;a href=&#34;#%e4%b9%b0%e4%b9%a6&#34; class=&#34;anchor&#34;&gt;
+        &lt;svg class=&#34;icon&#34; aria-hidden=&#34;true&#34; focusable=&#34;false&#34; height=&#34;16&#34; version=&#34;1.1&#34; viewBox=&#34;0 0 16 16&#34; width=&#34;16&#34;&gt;
+            &lt;path fill-rule=&#34;evenodd&#34;
+                d=&#34;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&#34;&gt;
+            &lt;/path&gt;
+        &lt;/svg&gt;
+    &lt;/a&gt;
+    买书
+&lt;/h3&gt;
+&lt;p&gt;这周京东图书活动，于是买了三本书：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://book.douban.com/subject/35425841/&#34;&gt;SRE 运维之道&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://book.douban.com/subject/35934902/&#34;&gt;性能之巅 第二版&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://book.douban.com/subject/35664949/&#34;&gt;运维困境与 DevOps 破解之道&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; 
+    src=&#34;https://blog-image-1306462451.cos.ap-nanjing.myqcloud.com/weekly/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20220904232152.jpg&#34; 
+    alt=&#34;&#34; 
+     /&gt;&lt;/p&gt;
+&lt;p&gt;工作后最大的感受就是没有太多的时间和精力去读书，这种状态非常的不好，不学习可是不行的，得调整状态把之前刷手机和娱乐视频得时间花在正事上。&lt;/p&gt;
+&lt;p&gt;周末看了《SRE 运维之道》，与其说是一本书更像是关于 SRE 的博客、文章、访谈记录、教程的合集。之前 Mentor 跟我聊过，说我距离一个合格 SRE 还欠缺一些东西，阅读这本书的几章后，我的感触更加的深刻，也认识到自己不论是技术还是在软技能上还有很长的路要走。&lt;/p&gt;
+
+    </description>
+    </item>
+    
     <item>
     <title>2022年8月第一周 | 八月，你好</title>
     <link>/post/2022-08-1st-weekly/</link>
